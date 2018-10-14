@@ -1,7 +1,4 @@
-
-select count(*) from temp_upload_mismer where IS_MATCH=1;
-select count(*) from temp_upload_mismer where IS_MATCH=0;
-select * from temp_upload_mismer ;
+-- ============STEP 1===================================
 
 truncate temp_upload_mismer;
 
@@ -14,65 +11,17 @@ LINES TERMINATED BY '\n'
 (MID,MERCHAN_DBA_NAME,STATUS_EDC,@OPEN_DATE,MSO,SOURCE_CODE,POS1,IS_MATCH,BatchID,ID)
 SET OPEN_DATE = STR_TO_DATE(@OPEN_DATE, '%m/%d/%Y')
 
--- -----????????????
-, IS_MATCH = 
-CASE
-
-	WHEN LEFT(MSO,1)='A' THEN 1
-	WHEN LEFT(MSO,1)='B' THEN 1
-	WHEN LEFT(MSO,1)='C' THEN 1
-	WHEN LEFT(MSO,1)='D' THEN 1
-	WHEN LEFT(MSO,1)='E' THEN 1
-	WHEN LEFT(MSO,1)='F' THEN 1
-	WHEN LEFT(MSO,1)='G' THEN 1
-	WHEN LEFT(MSO,1)='H' THEN 1
-	WHEN LEFT(MSO,1)='I' THEN 1
-	WHEN LEFT(MSO,1)='J' THEN 1
-	WHEN LEFT(MSO,1)='K' THEN 1
-	WHEN LEFT(MSO,1)='L' THEN 1
-	WHEN LEFT(MSO,1)='M' THEN 1
-	WHEN LEFT(MSO,1)='N' THEN 1
-	WHEN LEFT(MSO,1)='O' THEN 1
-	WHEN LEFT(MSO,1)='R' THEN 1
-	WHEN LEFT(MSO,1)='S' THEN 1
-    
-	WHEN SUBSTRING(MID,2,2)='01' THEN 1
-	WHEN SUBSTRING(MID,2,2)='02' THEN 1
-	WHEN SUBSTRING(MID,2,2)='03' THEN 1
-	WHEN SUBSTRING(MID,2,2)='04' THEN 1
-	WHEN SUBSTRING(MID,2,2)='05' THEN 1
-	WHEN SUBSTRING(MID,2,2)='06' THEN 1
-	WHEN SUBSTRING(MID,2,2)='07' THEN 1
-	WHEN SUBSTRING(MID,2,2)='08' THEN 1
-	WHEN SUBSTRING(MID,2,2)='09' THEN 1
-	WHEN SUBSTRING(MID,2,2)='10' THEN 1
-	WHEN SUBSTRING(MID,2,2)='11' THEN 1
-	WHEN SUBSTRING(MID,2,2)='12' THEN 1
-	WHEN SUBSTRING(MID,2,2)='14' THEN 1
-	WHEN SUBSTRING(MID,2,2)='15' THEN 1
-	WHEN SUBSTRING(MID,2,2)='16' THEN 1
-	WHEN SUBSTRING(MID,2,2)='17' THEN 1
-	WHEN SUBSTRING(MID,2,2)='18' THEN 1    
-    
-  	ELSE 0
-END
-
-
-
 ;
 
 
 
--- ===================
+-- ============STEP 2===================================
 INSERT INTO mismer_detail
 
 SELECT 
 NULL RowID,
 -- (SELECT max(BatchID) as BatchID FROM systemupload WHERE ApplicationSource='MISMER') BatchID, -- !!!
 999 BatchID, -- dev
-
---  date_format(str_to_date(a.OPEN_DATE,'%m/%d/%Y'),'%Y/%m/%d')
--- AS OPEN_DATE , 
 
 a.OPEN_DATE,
 a.MID,
@@ -128,16 +77,20 @@ CASE
 -- 	WHEN LEFT(a.MSO,1)='' THEN 'BLANK'
   	ELSE NULL
 END
-
 as WILAYAH,
-mc.Channel as CHANNEL,
-  
- CASE
 
+ CASE
+	WHEN MERCHAN_DBA_NAME like'%EXH%'  THEN 'EXH'
+  	ELSE mc.Channel 
+END
+as CHANNEL,
+
+ CASE
 	WHEN LEFT(a.MID,1)='3'  THEN 'YAP'
   	ELSE 'EDC'
 END
 as TYPE_MID
+
 ,NULL IS_MATCH
 ,null create_at
 ,null update_at
@@ -146,11 +99,9 @@ as TYPE_MID
 FROM temp_upload_mismer a 
 LEFT JOIN mso_channel mc ON a.MSO=mc.MSO
 
--- WHERE a.ID =??? -- IN(select ID from templateuploadmismer)
--- AND IS_VALID=1
-
 ;
 
-select * from mismer_detail
+-- truncate mismer_detail
+-- select * from mismer_detail where channel='EXH'
 
 
