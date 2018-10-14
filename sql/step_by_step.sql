@@ -104,4 +104,54 @@ LEFT JOIN mso_channel mc ON a.MSO=mc.MSO
 -- truncate mismer_detail
 -- select * from mismer_detail where channel='EXH'
 
+-- =================STEP 3
+-- select * from mismer_unmatch 
+INSERT INTO mismer_unmatch
+
+SELECT 
+RowID,
+BatchID,
+OPEN_DATE,
+MID,
+MERCHAN_DBA_NAME,
+STATUS_EDC,
+MSO,
+SOURCE_CODE,
+POS1,
+WILAYAH,
+CHANNEL,
+TYPE_MID,
+0 IS_UPDATE,
+null create_at,
+null update_at
+
+FROM mismer_detail
+WHERE TYPE_MID='EDC'
+AND CHANNEL IS NULL
+
+UNION ALL
+
+SELECT 
+RowID,
+BatchID,
+OPEN_DATE,
+MID,
+MERCHAN_DBA_NAME,
+STATUS_EDC,
+MSO,
+SOURCE_CODE,
+POS1,
+WILAYAH,
+CHANNEL,
+TYPE_MID,
+0 IS_UPDATE,
+null create_at,
+null update_at
+FROM mismer_detail
+WHERE TYPE_MID='YAP'
+AND CHANNEL IS NULL 
+AND WILAYAH IS NULL 
+
+;
+
 
