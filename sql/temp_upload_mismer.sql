@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Struktur dari tabel `temp_upload_mismer`
 --
-
+-- drop table temp_upload_mismer
 CREATE TABLE IF NOT EXISTS `temp_upload_mismer` (
   `MID` varchar(100) DEFAULT NULL,
   `MERCHAN_DBA_NAME` varchar(255) DEFAULT NULL,

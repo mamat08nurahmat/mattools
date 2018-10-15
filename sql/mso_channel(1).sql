@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `mso_channel`
 --
 
--- truncate mso_channel
+-- drop table mso_channel
 
 CREATE TABLE IF NOT EXISTS `mso_channel` (
 `ID` int(11) NOT NULL,

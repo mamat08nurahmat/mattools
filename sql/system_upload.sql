@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Struktur dari tabel `system_upload`
 --
-
+-- drop table system_upload
 CREATE TABLE IF NOT EXISTS `system_upload` (
 `id` int(11) unsigned NOT NULL,
   `upload_date` datetime DEFAULT NULL,

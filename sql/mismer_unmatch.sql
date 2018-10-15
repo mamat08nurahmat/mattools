@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Struktur dari tabel `mismer_unmatch`
 --
-
+-- drop table mismer_unmatch
 CREATE TABLE IF NOT EXISTS `mismer_unmatch` (
 `RowID` int(11) unsigned NOT NULL,
   `BatchID` int(11) NOT NULL,
