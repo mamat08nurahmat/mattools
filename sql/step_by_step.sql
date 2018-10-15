@@ -1,8 +1,8 @@
 -- ============STEP 1===================================
-
+-- select * from temp_upload_mismer;
 truncate temp_upload_mismer;
 
-LOAD DATA INFILE 'C:/xampp/htdocs/mattools/uploads/system_upload/2-MISMER.csv' 
+LOAD DATA INFILE 'C:/xampp/htdocs/mattools/uploads/system_upload/mismer1015.csv' 
 INTO TABLE temp_upload_mismer
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
@@ -10,12 +10,15 @@ LINES TERMINATED BY '\n'
  IGNORE 1 ROWS
 (MID,MERCHAN_DBA_NAME,STATUS_EDC,@OPEN_DATE,MSO,SOURCE_CODE,POS1,IS_MATCH,BatchID,ID)
 SET OPEN_DATE = STR_TO_DATE(@OPEN_DATE, '%m/%d/%Y')
-
 ;
 
 
 
 -- ============STEP 2===================================
+-- TRUNCATE mismer_detail
+-- select count(*) from temp_upload_mismer -- '358960'
+-- select count(*) from mismer_detail -- '358960'
+
 INSERT INTO mismer_detail
 
 SELECT 
@@ -105,6 +108,7 @@ LEFT JOIN mso_channel mc ON a.MSO=mc.MSO
 -- select * from mismer_detail where channel='EXH'
 
 -- =================STEP 3
+-- truncate mismer_unmatch 
 -- select * from mismer_unmatch 
 INSERT INTO mismer_unmatch
 

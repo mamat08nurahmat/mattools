@@ -106,7 +106,8 @@ class System_upload extends Admin
 			}
 
 			if (!empty($system_upload_file_path_name)) {
-				$system_upload_file_path_name_copy = date('YmdHis') . '-' . $system_upload_file_path_name;
+				// $system_upload_file_path_name_copy = date('YmdHis') . '-' . $system_upload_file_path_name;
+				$system_upload_file_path_name_copy = $this->input->post('source') . '-' . $this->input->post('upload_date').'.csv';
 
 				rename(FCPATH . 'uploads/tmp/' . $system_upload_file_path_uuid . '/' . $system_upload_file_path_name, 
 						FCPATH . 'uploads/system_upload/' . $system_upload_file_path_name_copy);
@@ -305,6 +306,67 @@ class System_upload extends Admin
 		redirect_back();
 	}
 
+// approve upload
+
+public function reset_approve($id = null)
+{
+	$reset['truncate'] = $this->db->query("truncate temp_upload_mismer;");		 
+
+	$reset['is_approved'] = $this->model_system_upload->change($id,$data = array('IS_APPROVED'=>0));
+
+	if ($reset) {
+		redirect('/administrator/system_upload', 'refresh');
+		set_message(cclang('has_been_approve', 'system_upload'), 'success');
+		// redirect_back();
+	} else {
+		redirect('/administrator/system_upload', 'refresh');
+		set_message(cclang('error_approve', 'system_upload'), 'error');
+		// redirect_back();
+	}	
+
+
+}
+
+public function approve_upload($id = null)
+{
+	// $this->is_allowed('system_upload_delete');
+
+	// $this->load->helper('file');
+
+	// $arr_id = $this->input->get('id');
+	// $remove = false;
+	$system_upload = $this->model_system_upload->find($id);
+	$approve['is_approved'] = $this->model_system_upload->change($id,$data = array('IS_APPROVED'=>1));
+	
+
+	// print_r($system_upload);
+
+$approve['import']  = 	import_csv($system_upload->file_path,$system_upload->id);
+
+
+// print_r($approve);
+// 	die();
+	// if (!empty($id)) {
+	// 	$remove = $this->_remove($id);
+	// } elseif (count($arr_id) >0) {
+	// 	foreach ($arr_id as $id) {
+		// $approve = $this->_approve($id);
+	// 	}
+	// }
+
+	if ($approve) {
+		redirect('/administrator/temp_upload_mismer', 'refresh');
+		set_message(cclang('has_been_approve', 'system_upload'), 'success');
+	} else {
+		set_message(cclang('error_approve', 'system_upload'), 'error');
+		redirect_back();
+	}
+
+}
+
+
+
+	
 		/**
 	* View view System Uploads
 	*
@@ -439,6 +501,16 @@ class System_upload extends Admin
 
 		$this->model_system_upload->pdf('system_upload', 'system_upload');
 	}
+
+// upload csv to temp_upload_mismer
+	public function  import_temp_upload_mismer($file_path){
+
+		// print_r('import csv');die();
+
+		print_r(import_csv($file_path));
+
+	}
+
 }
 
 

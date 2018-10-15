@@ -312,6 +312,20 @@ class Temp_upload_mismer extends Admin
 
 		$this->model_temp_upload_mismer->pdf('temp_upload_mismer', 'temp_upload_mismer');
 	}
+
+	//insert_into
+	public function insert_into_match($BatchID){
+
+		print_r(insert_mismer_detail($BatchID));
+
+	} 
+
+	//insert_into
+	public function insert_into_unmatc($BatchID){
+
+		print_r(insert_mismer_unmatch($BatchID));
+
+	} 
 }
 
 

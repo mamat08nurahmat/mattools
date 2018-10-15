@@ -124,6 +124,11 @@ jQuery(document).ready(domo);
                            <td><?= _ent($system_upload->is_approved); ?></td> 
                            <td><?= _ent($system_upload->upload_at); ?></td> 
                            <td width="200">
+
+<!-- //  -->
+
+                              <a href="javascript:void(0);" data-href="<?= site_url('administrator/system_upload/approve_upload/' . $system_upload->id); ?>" class="btn btn-danger approve-data">APPROVE</a>
+<!-- //  -->
                               <?php is_allowed('system_upload_view', function() use ($system_upload){?>
                               <a href="<?= site_url('administrator/system_upload/view/' . $system_upload->id); ?>" class="label-default"><i class="fa fa-newspaper-o"></i> <?= cclang('view_button'); ?>
                               <?php }) ?>
@@ -208,6 +213,33 @@ jQuery(document).ready(domo);
 <script>
   $(document).ready(function(){
    
+// approve
+$('.approve-data').click(function(){
+
+var url = $(this).attr('data-href');
+
+swal({
+    title: "<?= cclang('are_you_sure'); ?>",
+    text: "<?= cclang('approve_data'); ?>",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "<?= cclang('yes'); ?>",
+    cancelButtonText: "<?= cclang('no'); ?>",
+    closeOnConfirm: true,
+    closeOnCancel: true
+  },
+  function(isConfirm){
+    if (isConfirm) {
+      document.location.href = url;            
+    }
+  });
+
+return false;
+});
+
+
+
     $('.remove-data').click(function(){
 
       var url = $(this).attr('data-href');
