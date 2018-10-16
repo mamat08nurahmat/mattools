@@ -503,13 +503,28 @@ $approve['import']  = 	import_csv($system_upload->file_path,$system_upload->id);
 	}
 
 // upload csv to temp_upload_mismer
-	public function  import_temp_upload_mismer($file_path){
+	public function  import_temp_upload_mismer($file_path,$BatchID){
 
 		// print_r('import csv');die();
 
-		print_r(import_csv($file_path));
+		print_r(import_csv($file_path,$BatchID));
 
 	}
+
+	public function step1($BatchID){
+
+		print_r(import_csv($BatchID));
+
+	}
+
+	public function step2($BatchID){
+
+		print_r(insert_mismer_detail($BatchID));
+		print_r(insert_mismer_unmatch($BatchID));
+
+	}
+
+
 
 }
 

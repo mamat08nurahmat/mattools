@@ -2,7 +2,8 @@
 
 // import csv
 if(!function_exists('import_csv')) {
-	function import_csv($file_path,$BatchID) {
+	// function import_csv($file_path,$BatchID) {
+	function import_csv($BatchID) { //id
 		$ci =& get_instance();
 
 		// if ($where) {
@@ -10,6 +11,12 @@ if(!function_exists('import_csv')) {
 		// }
 
 //		truncate temp_upload_mismer;
+
+$system_upload = $ci->db->query("select * from system_upload where id=$BatchID;")->row();		 
+
+$file_path = $system_upload->file_path;
+
+// print_r($system_upload);die();
 
 $query['truncate'] = $ci->db->query("truncate temp_upload_mismer;");		 
 
@@ -164,7 +171,7 @@ SET SQL_SAFE_UPDATES = 0;
 ");		 
 $query['truncate'] = $ci->db->query("
 delete from mismer_unmatch where BatchID=$BatchID;
-");		 
+");		 //status is_updated=0
 
 
 $query['insert_into'] = $ci->db->query("		 
