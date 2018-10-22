@@ -1,4 +1,22 @@
 <?php
+// clean match by batch
+if(!function_exists('clean_match')) {
+	function clean_match($tahun, $bulan) {
+		$ci =& get_instance();
+	  	// $query = $ci->db->get($table_name);
+	  	$query = $ci->db->query(" CALL clean_match($tahun,$bulan);");
+
+	    return $query->result();
+	}
+}
+
+
+
+
+
+
+
+
 // FLPP HELPER
 // system_flpp/report
 if(!function_exists('db_get_all_data_distinct_batch')) {

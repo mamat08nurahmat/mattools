@@ -764,7 +764,52 @@ echo $tabel;
 }
 
 
-// ============
+// ============ STEP 1 
+//clean match in mismer_detail by BatchID ($tahun+$bulan) where IS_UPDATE=0
+public function clean_match($tahun,$bulan){
+
+	// $result = 	clean_match($tahun,$bulan);
+	$result = 	$this->db->query(" CALL clean_match($tahun,$bulan)");
+
+	print_r($result);
+
+	}
+
+// ============ STEP 2 
+//insert into mismer_detail 
+public function generate_match($tahun,$bulan){
+
+	// $result = 	clean_match($tahun,$bulan);
+	$result = 	$this->db->query(" CALL generate_match($tahun,$bulan)");
+
+	print_r($result);
+
+	}
+
+// ============ STEP 3 
+//clean unmatch in mismer_unmatch by BatchID ($tahun+$bulan) where IS_UPDATE=0
+public function clean_unmatch($tahun,$bulan){
+
+	// $result = 	clean_match($tahun,$bulan);
+	$result = 	$this->db->query(" CALL clean_unmatch($tahun,$bulan)");
+
+	print_r($result);
+
+	}
+
+// ============ STEP 4 
+//insert into mismer_unmatch 
+public function generate_unmatch($tahun,$bulan){
+
+	// $result = 	clean_match($tahun,$bulan);
+	$result = 	$this->db->query(" CALL generate_unmatch($tahun,$bulan)");
+
+	print_r($result);
+
+	}
+
+
+
 
 }
 

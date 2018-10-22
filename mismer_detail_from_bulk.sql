@@ -1,3 +1,6 @@
+
+ INSERT INTO  mismer_detail
+
 SELECT 
 
 null RowID,
@@ -87,11 +90,28 @@ LEFT JOIN mso_channel mc ON a.kolom12=mc.MSO
 
 WHERE LEFT(a.kolom2,1) IN (2,3,5,8,9)
 
-AND EXTRACT(YEAR FROM STR_TO_DATE(concat(concat(20,SUBSTRING(a.kolom5,5,2)),'/',SUBSTRING(a.kolom5,3,2),'/',SUBSTRING(a.kolom5,1,2)), '%Y/%m/%d') )=2018
--- AND LEFT(a.kolom2,1)=8
+ AND EXTRACT(YEAR FROM STR_TO_DATE(concat(concat(20,SUBSTRING(a.kolom5,5,2)),'/',SUBSTRING(a.kolom5,3,2),'/',SUBSTRING(a.kolom5,1,2)), '%Y/%m/%d') )=2018
+-- AND EXTRACT(MONTH FROM STR_TO_DATE(concat(concat(20,SUBSTRING(a.kolom5,5,2)),'/',SUBSTRING(a.kolom5,3,2),'/',SUBSTRING(a.kolom5,1,2)), '%Y/%m/%d') )=10
 
- LIMIT 100
+-- AND  STR_TO_DATE(concat(concat(20,SUBSTRING(a.kolom5,5,2)),'/',SUBSTRING(a.kolom5,3,2),'/',SUBSTRING(a.kolom5,1,2)), '%Y/%m/%d') 
+-- >='2010-10-01'
+
+-- AND  STR_TO_DATE(concat(concat(20,SUBSTRING(a.kolom5,5,2)),'/',SUBSTRING(a.kolom5,3,2),'/',SUBSTRING(a.kolom5,1,2)), '%Y/%m/%d') 
+-- <='2010-10-05'
+
+
+-- LIMIT 100
 ;
 
--- select * from mso_channel;
+-- select * from mso_channel where KodeWilayah='Q';
 -- ======================================
+/*
+INSERT INTO `mattools`.`mso_channel` (`KodeWilayah`, `MSO`, `Channel`) VALUES ('Q', 'Q01', 'EBK');
+INSERT INTO `mattools`.`mso_channel` (`KodeWilayah`, `MSO`, `Channel`) VALUES ('Q', 'Q02', 'EBK');
+INSERT INTO `mattools`.`mso_channel` (`KodeWilayah`, `MSO`, `Channel`) VALUES ('Q', 'Q03', 'EBK');
+INSERT INTO `mattools`.`mso_channel` (`KodeWilayah`, `MSO`, `Channel`) VALUES ('Q', 'Q04', 'EBK');
+INSERT INTO `mattools`.`mso_channel` (`KodeWilayah`, `MSO`, `Channel`) VALUES ('Q', 'Q05', 'EBK');
+INSERT INTO `mattools`.`mso_channel` (`KodeWilayah`, `MSO`, `Channel`) VALUES ('Q', 'Q06', 'EBK');
+INSERT INTO `mattools`.`mso_channel` (`KodeWilayah`, `MSO`, `Channel`) VALUES ('Q', 'Q07', 'EBK');
+INSERT INTO `mattools`.`mso_channel` (`KodeWilayah`, `MSO`, `Channel`) VALUES ('Q', 'Q08', 'EBK');
+*/
