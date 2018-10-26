@@ -1,0 +1,10 @@
+CREATE TABLE `total` (
+  `tahun` int(5) NOT NULL,
+  `bulan` int(5) NOT NULL,
+  `outstanding` varchar(30) NOT NULL,
+  `angsuran_pokok` varchar(30) NOT NULL,
+  `angsuran_bunga` varchar(30) NOT NULL,
+  `angsuran_total` varchar(10) NOT NULL,
+  `NO_KTP_PEMOHON` varchar(50) NOT NULL,
+  `batch_id` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1

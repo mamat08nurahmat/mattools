@@ -125,8 +125,20 @@ table.blueTable tfoot td {
 
 <tbody>
 <?php
+
+$sum_OUTSTANDING =0;   
+$sum_ANGSURAN_POKOK =0;
+$sum_ANGSURAN_BUNGA =0;
+$sum_ANGSURAN_TOTAL =0;
 foreach($data_array as $r):
+$sum_OUTSTANDING    +=  $r['OUTSTANDING'];
+$sum_ANGSURAN_POKOK +=  $r['ANGSURAN_POKOK'];
+$sum_ANGSURAN_BUNGA +=  $r['ANGSURAN_BUNGA'];
+$sum_ANGSURAN_TOTAL +=  $r['ANGSURAN_TOTAL'];
 ?>
+
+
+
 <tr>
 <td><?=$r['NO']?></td>
 <td><?=$r['Y']?></td>
@@ -139,7 +151,25 @@ foreach($data_array as $r):
 <?php
 endforeach;
 ?>
+
+<tr>
+
+<td colspan=3>TOTAL</td>
+
+<td><?=currency_format($sum_OUTSTANDING)?></td>
+<td><?=currency_format($sum_ANGSURAN_POKOK)?></td>
+<td><?=currency_format($sum_ANGSURAN_BUNGA)?></td>
+<td><?=currency_format($sum_ANGSURAN_TOTAL)?></td>
+
+
+</tr>
+
 </tbody>
+
+
+
+
+
 </table>
 
 

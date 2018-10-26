@@ -18,6 +18,7 @@ class Temp_upload_unmatch extends Admin
 		$this->load->library('csvimport');
 		$this->load->model('model_temp_upload_unmatch');
 		$this->load->model('model_mismer_unmatch');
+		$this->load->model('model_mismer_detail');
 	}
 
 	/**
@@ -355,6 +356,55 @@ public function generate($id = null)
 	redirect_back();
 }
 
+// GENERATE ALL LIMIT
+
+// ------------GENERATE 
+public function generate_all($limit =100)
+{
+
+	// ini_set('MAX_EXECUTION_TIME', -1);
+
+	// $this->is_allowed('temp_upload_unmatch_delete');
+
+	// $this->load->helper('file');
+
+	$arr_id = $this->db->query("SELECT MID FROM temp_upload_unmatch LIMIT $limit")->result();
+	$count_awal = $this->db->query("SELECT COUNT(MID) as jumlah FROM temp_upload_unmatch ")->row();
+
+	
+	// print_r($arr_id);die();
+	// $arr_id = $this->input->get('id');
+	// $generate = false;
+	// $id->MID
+	// if (!empty($id)) {
+		// 	$generate = $this->_generate($id);
+		// } elseif (count($arr_id) >0) {
+			foreach ($arr_id as $id) {
+				// print_r($id->MID);
+				// print_r('<hr>');
+				
+				$generate[$id->MID] = $this->_generate($id->MID);
+			}
+			// }
+			$count_akhir = $this->db->query("SELECT COUNT(MID) as jumlah FROM temp_upload_unmatch ")->row();
+			// print_r($count->jumlah);die();
+			// $generate['succes'] = count($generate[$id->MID]); 
+			$generate['awal'] = $count_awal->jumlah; 
+			$generate['akhir'] = $count_akhir->jumlah; 
+	// if ($generate) {
+	// 	set_message(cclang('has_been_generate', 'temp_upload_unmatch'), 'success');
+	// } else {
+	// 	set_message(cclang('error_delete', 'temp_upload_unmatch'), 'error');
+	// }
+
+	// redirect_back();
+
+	print_r($generate);
+}
+
+
+
+
 private function _generate($id)
 {
 
@@ -369,7 +419,7 @@ private function _generate($id)
 // die();
 
 
-	$data = array(
+	$data_mu = array(
 
 		'RowID' => $temp_upload_unmatch->RowID,
 		'BatchID' => $temp_upload_unmatch->BatchID, 
@@ -395,7 +445,17 @@ private function _generate($id)
 	
 
 
-	$generate['update_mismer_unmatch'] = $this->model_mismer_unmatch->change($id,$data);
+	$generate['update_mismer_unmatch'] = $this->model_mismer_unmatch->change($id,$data_mu);
+
+
+	$data_md=array(
+		'updated_at' => $temp_upload_unmatch->created_at,
+		'IS_MATCH' => 1,
+		'IS_UPDATE' => 1
+	);
+
+	$generate['update_mismer_detail'] = $this->model_mismer_detail->change($id,$data_md);
+
 
 	$generate['remove_temp'] = $this->model_temp_upload_unmatch->remove($id);
 	// print_r($temp_upload_unmatch);

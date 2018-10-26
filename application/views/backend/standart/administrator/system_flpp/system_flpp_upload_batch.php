@@ -38,6 +38,25 @@
 <section class="content">
     <div class="row" >
         <div class="col-md-12">
+
+<!-- //  -->
+<div class="panel with-nav-tabs panel-default">
+                <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                        <!-- NAV TAB -->
+                            <li class="active"><a href="#tab1default" data-toggle="tab">Upload</a></li>
+                            <li><a href="#tab2default" data-toggle="tab">TAB 2</a></li>
+                            <!-- <li><a href="#tab3default" data-toggle="tab">TAB 3</a></li> -->
+                        <!-- /NAV TAB -->        	
+                        </ul>
+                </div>
+
+                <div class="panel-body">
+                    <div class="tab-content">
+<!-- //  -->
+ <!--TAB 1 Active  -->
+ <div class="tab-pane fade in active" id="tab1default">
+<!-- //  -->
             <div class="box box-warning">
                 <div class="box-body ">
                     <!-- Widget: user widget style 1 -->
@@ -72,8 +91,8 @@
                         </div>
 
 
-<!-- //  -->
-<div class="form-group ">
+                                        <!-- //  -->
+                                        <div class="form-group ">
                             <label for="RowID" class="col-sm-2 control-label">Month 
                             <i class="required">*</i>
                             </label>
@@ -166,6 +185,31 @@
                 <!--/box body -->
             </div>
             <!--/box -->
+
+					</div>
+ <!--/TAB 1 Active  -->
+
+<!--TAB 2  -->
+<div class="tab-pane fade" id="tab2default">
+
+        </div>
+<!-- /TAB 2  -->
+
+
+
+
+<!-- /TAB CONTENT/  -->
+
+                    </div>
+                </div>
+<!-- //  -->
+            </div>
+        
+
+
+
+<!-- //  -->
+
         </div>
     </div>
 </section>
@@ -247,7 +291,7 @@ let year = document.getElementById('year').value;
 			{
                 console.log('success');
                 console.log(data);
-                window.location.href = BASE_URL + 'administrator/system_flpp';
+                // window.location.href = BASE_URL + 'administrator/system_flpp';
 				// $('#import_csv')[0].reset();
 				// $('#import_csv_btn').attr('disabled', false);
 				// $('#import_csv_btn').html('Import Done');
@@ -329,9 +373,9 @@ let year = document.getElementById('year').value;
       
        
 // ================
-$('#form_system_flpp').on('submit', function(event){
+// $('#form_system_flpp').on('submit', function(event){
 
-console.log('submitttttt');    
+// console.log('submitttttt');    
 		// event.preventDefault();
 		// $.ajax({
 		// 	url:"<?php echo base_url(); ?>csv_import/import",
@@ -351,7 +395,7 @@ console.log('submitttttt');
 		// 		load_data();
 		// 	}
 		// })
-	});
+	// });
 // =========
        
     

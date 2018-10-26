@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_mismer_detail extends MY_Model {
 
-	private $primary_key 	= 'RowID';
+	private $primary_key 	= 'MID';
 	private $table_name 	= 'mismer_detail';
 	private $field_search 	= ['BatchID', 'OPEN_DATE', 'MID', 'MERCHAN_DBA_NAME', 'STATUS_EDC', 'MSO', 'SOURCE_CODE', 'POS1', 'WILAYAH', 'CHANNEL', 'IS_MATCH', 'created_at', 'updated_at'];
 
