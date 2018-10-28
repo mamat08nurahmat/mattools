@@ -95,7 +95,6 @@ abstract class AbstractCloner implements ClonerInterface
         'AMQPEnvelope' => array('Symfony\Component\VarDumper\Caster\AmqpCaster', 'castEnvelope'),
 
         'ArrayObject' => array('Symfony\Component\VarDumper\Caster\SplCaster', 'castArrayObject'),
-        'ArrayIterator' => array('Symfony\Component\VarDumper\Caster\SplCaster', 'castArrayIterator'),
         'SplDoublyLinkedList' => array('Symfony\Component\VarDumper\Caster\SplCaster', 'castDoublyLinkedList'),
         'SplFileInfo' => array('Symfony\Component\VarDumper\Caster\SplCaster', 'castFileInfo'),
         'SplFileObject' => array('Symfony\Component\VarDumper\Caster\SplCaster', 'castFileObject'),
@@ -105,6 +104,8 @@ abstract class AbstractCloner implements ClonerInterface
         'SplPriorityQueue' => array('Symfony\Component\VarDumper\Caster\SplCaster', 'castHeap'),
         'OuterIterator' => array('Symfony\Component\VarDumper\Caster\SplCaster', 'castOuterIterator'),
 
+        'MongoCursorInterface' => array('Symfony\Component\VarDumper\Caster\MongoCaster', 'castCursor'),
+
         'Redis' => array('Symfony\Component\VarDumper\Caster\RedisCaster', 'castRedis'),
         'RedisArray' => array('Symfony\Component\VarDumper\Caster\RedisCaster', 'castRedisArray'),
 
@@ -112,8 +113,6 @@ abstract class AbstractCloner implements ClonerInterface
         'DateInterval' => array('Symfony\Component\VarDumper\Caster\DateCaster', 'castInterval'),
         'DateTimeZone' => array('Symfony\Component\VarDumper\Caster\DateCaster', 'castTimeZone'),
         'DatePeriod' => array('Symfony\Component\VarDumper\Caster\DateCaster', 'castPeriod'),
-
-        'GMP' => array('Symfony\Component\VarDumper\Caster\GmpCaster', 'castGmp'),
 
         ':curl' => array('Symfony\Component\VarDumper\Caster\ResourceCaster', 'castCurl'),
         ':dba' => array('Symfony\Component\VarDumper\Caster\ResourceCaster', 'castDba'),
@@ -134,6 +133,7 @@ abstract class AbstractCloner implements ClonerInterface
     protected $maxItems = 2500;
     protected $maxString = -1;
     protected $minDepth = 1;
+    protected $useExt;
 
     private $casters = array();
     private $prevErrorHandler;
@@ -151,6 +151,7 @@ abstract class AbstractCloner implements ClonerInterface
             $casters = static::$defaultCasters;
         }
         $this->addCasters($casters);
+        $this->useExt = extension_loaded('symfony_debug');
     }
 
     /**
@@ -166,7 +167,7 @@ abstract class AbstractCloner implements ClonerInterface
     public function addCasters(array $casters)
     {
         foreach ($casters as $type => $callback) {
-            $this->casters[strtolower($type)][] = \is_string($callback) && false !== strpos($callback, '::') ? explode('::', $callback, 2) : $callback;
+            $this->casters[strtolower($type)][] = is_string($callback) && false !== strpos($callback, '::') ? explode('::', $callback, 2) : $callback;
         }
     }
 
@@ -211,14 +212,14 @@ abstract class AbstractCloner implements ClonerInterface
      */
     public function cloneVar($var, $filter = 0)
     {
-        $this->prevErrorHandler = set_error_handler(function ($type, $msg, $file, $line, $context = array()) {
+        $this->prevErrorHandler = set_error_handler(function ($type, $msg, $file, $line, $context) {
             if (E_RECOVERABLE_ERROR === $type || E_USER_ERROR === $type) {
                 // Cloner never dies
                 throw new \ErrorException($msg, 0, $type, $file, $line);
             }
 
             if ($this->prevErrorHandler) {
-                return \call_user_func($this->prevErrorHandler, $type, $msg, $file, $line, $context);
+                return call_user_func($this->prevErrorHandler, $type, $msg, $file, $line, $context);
             }
 
             return false;

@@ -35,6 +35,126 @@ class System_flpp extends Admin
 
 	}
 
+	public function get_generate($batch_id){
+
+$where = array('batch_id'=>$batch_id);
+
+$result =		$this->model_system_flpp->get_all_where($where);
+
+// print_r($result);die();
+		$tabel='';
+		$tabel.='xxxxxxxxxxxxxxxxxxxxxx';
+/*
+*/		
+$tabel.=$batch_id;
+$tabel.='
+<style>
+table.blueTable {
+  border: 1px solid #1C6EA4;
+  background-color: #EEEEEE;
+  width: 80%;
+  text-align: left;
+
+}
+table.blueTable td, table.blueTable th {
+  border: 1px solid #AAAAAA;
+  padding: 1px 1px;
+}
+table.blueTable tbody td {
+  font-size: 10px;
+  font-weight: bold;  
+}
+table.blueTable tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.blueTable thead {
+  background: #1C6EA4;
+  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  border-bottom: 2px solid #444444;
+}
+table.blueTable thead th {
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFFFFF;
+  border-left: 2px solid #D0E4F5;
+}
+table.blueTable thead th:first-child {
+  border-left: none;
+}
+
+table.blueTable tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color:#070B00;
+  background: #D0E4F5;
+  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  border-top: 2px solid #444444; 
+}
+table.blueTable tfoot td {
+  font-size: 14px;
+}
+
+</style>
+		
+
+
+';
+$tabel.='
+<table class="blueTable">
+
+<thead>
+<tr>
+<th>No</th>
+<th>Nama Pemohon</th>
+<th>KTP</th>
+<th>Tgl Akad</th>
+<th>Harga Rumah</th>
+<th>Nilai KPR</th>
+<th>Bunga KPR</th>
+<th>Tenor</th>
+<th>Angsuran KPR</th>
+<th>Nilai FLPP</th>
+<th>Batch</th>
+<th>#</th>
+</tr>
+</thead>';
+
+$tabel.='
+<tbody>
+';
+$no=1;
+foreach($result as $r):
+$tabel.='
+<tr>
+<td>'.$no++.'</td>
+<td>'.$r->NAMA_PEMOHON.'</td>
+<td>'.$r->NO_KTP_PEMOHON.'</td>
+<td>'.$r->TGL_AKAD.'</td>
+<td>'.$r->HARGA_RUMAH.'</td>
+<td>'.$r->NILAI_KPR.'</td>
+<td>'.$r->SUKU_BUNGA_KPR.'</td>
+<td>'.$r->TENOR.'</td>
+<td>'.$r->ANGSURAN_KPR.'</td>
+<td>'.$r->NILAI_FLPP.'</td>
+<td>'.$r->batch_id.'</td>
+<td>
+<a href="'.site_url('administrator/system_flpp/get_detail_id/' . $r->NO_KTP_PEMOHON).'" >DETAIL</a> 
+
+</td>
+</tr>
+';
+endforeach;
+$tabel.='
+</tbody>
+</table> 
+';
+
+		echo $tabel;
+	}
 
 
 
@@ -1839,10 +1959,69 @@ $bunga = $bunga2 ;
 
 // print_r($temp_array_total);die();
 
-
 $tabel = '';
+
+
+$tabel.='
+<style>
+table.blueTable {
+  border: 1px solid #1C6EA4;
+  background-color: #EEEEEE;
+  width: 80%;
+  text-align: left;
+
+}
+table.blueTable td, table.blueTable th {
+  border: 1px solid #AAAAAA;
+  padding: 1px 1px;
+}
+table.blueTable tbody td {
+  font-size: 10px;
+  font-weight: bold;  
+}
+table.blueTable tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.blueTable thead {
+  background: #1C6EA4;
+  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  border-bottom: 2px solid #444444;
+}
+table.blueTable thead th {
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFFFFF;
+  border-left: 2px solid #D0E4F5;
+}
+table.blueTable thead th:first-child {
+  border-left: none;
+}
+
+table.blueTable tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color:#070B00;
+  background: #D0E4F5;
+  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  border-top: 2px solid #444444; 
+}
+table.blueTable tfoot td {
+  font-size: 14px;
+}
+
+</style>
+		
+
+
+';
+
+
 // $tabel .= '';
-$tabel .= '<table border="1">';
+$tabel .= '<table class="blueTable">';
 
 $tabel .= '
 
@@ -1872,7 +2051,7 @@ foreach($temp_array_total as $tot){
 
 $total_pokok = (bunga() * $tot->sum_angsuran_pokok);	
 	$tabel .= '	
-	<tr class="gradeX">
+	<tr>
 	<td>'.$no++.'</td>
 	<td>'.$tot->tahun.'</td>
 	<td>'.$tot->bulan.'</td>
@@ -1894,7 +2073,7 @@ $total_pokok = (bunga() * $tot->sum_angsuran_pokok);
 
 
 $tabel .= '	
-<tr class="gradeX">
+<tr>
 <td colspan="3">TOTAL</td>
 
 <td>'.$tot_outstanding.'</td>
@@ -1925,6 +2104,118 @@ echo $tabel;
 	
 
 	}
+
+//export batch_total
+	//total flpp per batch
+	function export_batch_total($batch_id){
+
+
+
+		$temp_array_total = $this->db->query("
+		
+		select 
+		tahun,
+		bulan,
+		sum(outstanding) as sum_outstanding,
+		 sum(angsuran_pokok) as sum_angsuran_pokok,
+		 sum(angsuran_bunga) as sum_angsuran_bunga,
+		 sum(angsuran_total)  as sum_angsuran_total
+		
+		 from angsuran_detail
+		 WHERE batch_id=$batch_id
+		 GROUP BY  tahun,bulan
+		 ORDER BY tahun,bulan
+
+		")->result();
+
+// print_r($temp_array_total);die();
+
+$tabel = '';
+
+
+
+// $tabel .= '
+// header("Content-Disposition: attachment; filename='$batch_id'.xls");
+// ';
+
+$tabel .= '<table border=1>';
+
+$tabel .= '
+
+<thead>
+<tr>
+<th>NO</th>
+<th>Y</th>
+<th>M</th>
+<th>OUTSTANDING</th>
+<th>ANGSURAN_POKOK</th>
+<th>ANGSURAN_BUNGA</th>
+<th>ANGSURAN_TOTAL</th>
+</tr>
+</thead>
+
+';
+
+
+$tabel .= '<tbody>';
+$no=1;
+$tot_outstanding=0;
+$tot_angsuran_pokok=0;
+$tot_angsuran_bunga=0;
+$tot_angsuran_total=0;
+
+foreach($temp_array_total as $tot){
+
+$total_pokok = (bunga() * $tot->sum_angsuran_pokok);	
+	$tabel .= '	
+	<tr>
+	<td>'.$no++.'</td>
+	<td>'.$tot->tahun.'</td>
+	<td>'.$tot->bulan.'</td>
+	<td>'.$tot->sum_outstanding.'</td>
+	<td>'.$total_pokok.'</td>
+	<td>'.$tot->sum_angsuran_bunga.'</td>
+	<td>'.$tot->sum_angsuran_total.'</td>
+	</tr>
+	';
+	
+	$tot_outstanding 	+=	$tot->sum_outstanding;
+	$tot_angsuran_pokok += $total_pokok;	//$tot->sum_angsuran_pokok;
+	$tot_angsuran_bunga	+=	$tot->sum_angsuran_bunga;
+	$tot_angsuran_total	+=	$tot->sum_angsuran_total;
+	
+	
+
+}
+
+
+$tabel .= '	
+<tr>
+<td colspan="3">TOTAL</td>
+
+<td>'.$tot_outstanding.'</td>
+<td>'.$tot_angsuran_pokok.'</td>
+<td>'.$tot_angsuran_bunga.'</td>
+<td>'.$tot_angsuran_total.'</td>
+</tr>
+';
+
+
+
+$tabel .= '</tbody>';
+
+
+
+$tabel .= '</table">';
+
+
+echo $tabel;
+
+
+	}
+
+
+
 
 //VIEW TOTAL
 function cari_total($batch_id){

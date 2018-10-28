@@ -71,14 +71,6 @@ class Web extends Front
         }
 
     }
-
-    public function migrate2(){
-
-    print_r('migrateeeeeeeeeee');
-
-    }
-
-
 }
 
 

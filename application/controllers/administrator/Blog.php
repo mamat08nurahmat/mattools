@@ -439,29 +439,6 @@ class Blog extends Admin
 
 		$this->model_blog->pdf('blog', 'blog');
 	}
-
-// =============
-
-public function migrate($version = null)
-{
-	// print_r('migrateeeeeeeeeeeee');die();
-	$this->load->library('migration');
-		
-	if ($version) {
-		if ($this->migration->version($version) === FALSE) {
-		   show_error($this->migration->error_string());
-		}   
-	} 
-	else {
-		if ($this->migration->latest() === FALSE) {
-		   show_error($this->migration->error_string());
-		}   
-	}
-
-}
-
-
-
 }
 
 

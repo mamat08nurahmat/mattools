@@ -56,7 +56,7 @@ class HtmlDumper extends CliDumper
     /**
      * {@inheritdoc}
      */
-    public function __construct($output = null, string $charset = null, int $flags = 0)
+    public function __construct($output = null, $charset = null, $flags = 0)
     {
         AbstractDumper::__construct($output, $charset, $flags);
         $this->dumpId = 'sf-dump-'.mt_rand();
@@ -310,9 +310,6 @@ return function (root, x) {
 
         return "concat(" + parts.join(",") + ", '')";
     }
-    function xpathHasClass(className) {
-        return "contains(concat(' ', normalize-space(@class), ' '), ' " + className +" ')";
-    }
     addEventListener(root, 'mouseover', function (e) {
         if ('' != refStyle.innerHTML) {
             refStyle.innerHTML = '';
@@ -519,15 +516,7 @@ return function (root, x) {
                     return;
                 }
 
-                var classMatches = [
-                    "sf-dump-str",
-                    "sf-dump-key",
-                    "sf-dump-public",
-                    "sf-dump-protected",
-                    "sf-dump-private",
-                ].map(xpathHasClass).join(' or ');
-                
-                var xpathResult = doc.evaluate('.//span[' + classMatches + '][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', root, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+                var xpathResult = doc.evaluate('//pre[@id="' + root.id + '"]//span[@class="sf-dump-str" or @class="sf-dump-key" or @class="sf-dump-public" or @class="sf-dump-protected" or @class="sf-dump-private"][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 
                 while (node = xpathResult.iterateNext()) state.nodes.push(node);
                 
@@ -826,10 +815,10 @@ EOHTML
             }
             $label = esc(substr($value, -$attr['ellipsis']));
             $style = str_replace(' title="', " title=\"$v\n", $style);
-            $v = sprintf('<span class=%s>%s</span>', $class, substr($v, 0, -\strlen($label)));
+            $v = sprintf('<span class=%s>%s</span>', $class, substr($v, 0, -strlen($label)));
 
             if (!empty($attr['ellipsis-tail'])) {
-                $tail = \strlen(esc(substr($value, -$attr['ellipsis'], $attr['ellipsis-tail'])));
+                $tail = strlen(esc(substr($value, -$attr['ellipsis'], $attr['ellipsis-tail'])));
                 $v .= sprintf('<span class=sf-dump-ellipsis>%s</span>%s', substr($label, 0, $tail), substr($label, $tail));
             } else {
                 $v .= $label;
@@ -840,7 +829,7 @@ EOHTML
             $s = '<span class=sf-dump-default>';
             $c = $c[$i = 0];
             do {
-                $s .= isset($map[$c[$i]]) ? $map[$c[$i]] : sprintf('\x%02X', \ord($c[$i]));
+                $s .= isset($map[$c[$i]]) ? $map[$c[$i]] : sprintf('\x%02X', ord($c[$i]));
             } while (isset($c[++$i]));
 
             return $s.'</span>';
@@ -850,8 +839,7 @@ EOHTML
             $attr['href'] = $href;
         }
         if (isset($attr['href'])) {
-            $target = isset($attr['file']) ? '' : ' target="_blank"';
-            $v = sprintf('<a href="%s"%s rel="noopener noreferrer">%s</a>', esc($this->utf8Encode($attr['href'])), $target, $v);
+            $v = sprintf('<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>', esc($this->utf8Encode($attr['href'])), $v);
         }
         if (isset($attr['lang'])) {
             $v = sprintf('<code class="%s">%s</code>', esc($attr['lang']), $v);
@@ -895,7 +883,7 @@ EOHTML
         $options = $this->extraDisplayOptions + $this->displayOptions;
 
         if ($fmt = $options['fileLinkFormat']) {
-            return \is_string($fmt) ? strtr($fmt, array('%f' => $file, '%l' => $line)) : $fmt->format($file, $line);
+            return is_string($fmt) ? strtr($fmt, array('%f' => $file, '%l' => $line)) : $fmt->format($file, $line);
         }
 
         return false;

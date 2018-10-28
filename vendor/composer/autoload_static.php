@@ -8,7 +8,6 @@ class ComposerStaticInit13e7765008d9187172b77548f69c8496
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
     );
 
@@ -19,17 +18,12 @@ class ComposerStaticInit13e7765008d9187172b77548f69c8496
         ),
         'S' => 
         array (
-            'Symfony\\Polyfill\\Php72\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\VarDumper\\' => 28,
         ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
-        ),
-        'M' => 
-        array (
-            'MathPHP\\' => 8,
         ),
         'D' => 
         array (
@@ -42,10 +36,6 @@ class ComposerStaticInit13e7765008d9187172b77548f69c8496
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
         ),
-        'Symfony\\Polyfill\\Php72\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php72',
-        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
@@ -57,10 +47,6 @@ class ComposerStaticInit13e7765008d9187172b77548f69c8496
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-        ),
-        'MathPHP\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/markrogoyski/math-php/src',
         ),
         'DebugBar\\' => 
         array (

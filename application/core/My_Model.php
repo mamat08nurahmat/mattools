@@ -76,6 +76,14 @@ class MY_Model extends CI_Model {
     }
 
 
+    public function get_all_where($where)
+    {
+        $query = $this->db->get_where($this->table_name, $where);
+
+        return $query->result();
+    }
+
+
     public function get_single($where)
     {
         $query = $this->db->get_where($this->table_name, $where);
