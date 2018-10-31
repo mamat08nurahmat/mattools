@@ -531,6 +531,8 @@ console.log('generate...........');
       $('.generate_total').click(function(event){
 
 console.log('generate Total...........');
+console.log('$this->gen_angsuran_detail_all($batch_id)');
+
         let batch_id= document.getElementById('batch_id2').value;
         // let month = document.getElementById('month').value;
         // let year = document.getElementById('year').value;

@@ -5,8 +5,15 @@ mismer_bulk;
 select count(*) from mismer_bulk;
 
 -- EXEC CMD
-LOAD DATA INFILE 'E:/MISMER BSK/15-10-2018/mismer1015.txt' INTO TABLE mismer_bulk FIELDS TERMINATED BY '|';
+LOAD DATA INFILE 'E:/MISMER BSK/15-10-2018/mismer1015.txt' INTO TABLE mismer_bulk FIELDS TERMINATED BY '|' IGNORE 1 ROWS;
 -- ==========================
+
+LOAD DATA INFILE 'c:/tmp/discounts.csv' 
+INTO TABLE discounts 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
 
 
 SELECT 

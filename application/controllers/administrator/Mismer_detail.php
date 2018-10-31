@@ -24,6 +24,638 @@ class Mismer_detail extends Admin
 	*
 	* @var $offset String
 	*/
+
+	//dev
+
+	public function report(){
+
+
+		// $this->data['no_ktp'] = $ktp;
+
+		$this->template->title('Mismer Detail DEV');
+		$this->render('backend/standart/administrator/mismer_detail/mismer_detail_dev', $this->data);
+	
+
+
+	}
+
+//generate1 
+//klik generate action ajax
+	public function get_generate1($bulan,$tahun){
+
+
+		// $this->data['no_ktp'] = $ktp;
+
+	// $report = $this->model_Report->get_report($bulan,$tahun);
+	$report = $this->model_mismer_detail->getresult2($bulan,$tahun);
+
+
+
+	$tabel_result1='';
+	$tabel_result1.='
+	<style>
+	table.blueTable {
+	  border: 1px solid #1C6EA4;
+	  background-color: #EEEEEE;
+	  width: 80%;
+	  text-align: left;
+	
+	}
+	table.blueTable td, table.blueTable th {
+	  border: 1px solid #AAAAAA;
+	  padding: 1px 1px;
+	}
+	table.blueTable tbody td {
+	  font-size: 10px;
+	  font-weight: bold;  
+	}
+	table.blueTable tr:nth-child(even) {
+	  background: #D0E4F5;
+	}
+	table.blueTable thead {
+	  background: #1C6EA4;
+	  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  border-bottom: 2px solid #444444;
+	}
+	table.blueTable thead th {
+	  font-size: 10px;
+	  font-weight: bold;
+	  color: #FFFFFF;
+	  border-left: 2px solid #D0E4F5;
+	}
+	table.blueTable thead th:first-child {
+	  border-left: none;
+	}
+	
+	table.blueTable tfoot {
+
+	  font-size: 14px;
+	  font-weight: bold;
+	  color:#070B00;
+	  background: #D0E4F5;
+	  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  border-top: 2px solid #444444; 
+	}
+	table.blueTable tfoot td {
+	  font-size: 14px;
+	}
+	
+	
+	</style>
+		
+	
+	';
+	$tabel_result1.='
+	<button type="button" id="export1" dataTahun="'.$tahun.'" dataBulan="'.$bulan.'"  class="">Export</button>			
+';
+	$tabel_result1.='
+	<table class="blueTable">
+	<thead>
+	<tr>
+	<th width="10%">WILAYAH</th>
+	<th width="10%">EDC</th>
+	<th width="10%">YAP</th>
+	<th width="10%">TOTAL</th>
+	<th width="10%">#</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+
+	';
+
+
+	$tot=0;
+	$tot1=0;
+	$tot2=0;
+	$total=0;	
+
+	foreach ($report as $r)
+	{
+
+// total
+$tot1+=$r->JUMLAH_EDC;
+$tot2+=$r->JUMLAH_YAP;
+$total =$tot1+$tot2;
+// total
+
+
+$jumlah =$r->JUMLAH_EDC+$r->JUMLAH_YAP;		
+
+	$tabel_result1.='
+	<tr>
+	<td>'.$r->WILAYAH.'</td>
+	<td>'.$r->JUMLAH_EDC.'</td>
+	<td>'.$r->JUMLAH_YAP.'</td>
+	<td>'.$jumlah.'</td>
+	<td>
+	<button type="button" id="detail_modal1" dataTahun="'.$tahun.'" dataBulan="'.$bulan.'" dataWilayah="'.$r->WILAYAH.'" class="">Detail</button>			
+	</td>
+	</tr>
+	';
+
+}
+// end forech
+
+	$tabel_result1.='
+	<tfoot>
+	<tr >
+	<td >TOTAL</td>
+	<td>'.$tot1.'</td>
+	<td>'.$tot2.'</td>
+	<td>'.$total.'</td>
+	<td></td>
+	</tr>
+	</tfoot>
+	';
+	
+	$tabel_result1.='
+	</table>
+
+	
+	';
+
+	echo $tabel_result1;
+
+
+
+		// $tabel ='';
+		// echo $tabel;
+
+
+	}
+
+
+//generate2 
+//klik generate action ajax
+public function get_generate2($tgl_awal,$tgl_akhir){
+
+
+	$tgl_awal= date("Y-m-d",strtotime($tgl_awal));
+	$tgl_akhir= date("Y-m-d",strtotime($tgl_akhir));
+
+	// $report = $this->model_Report->get_report_between($tgl_awal,$tgl_akhir);
+	$report = $this->model_mismer_detail->getResult1($tgl_awal,$tgl_akhir);
+
+
+
+	$tabel_result1='';
+	$tabel_result1.='
+	
+	<style>
+	table.blueTable {
+	  border: 1px solid #1C6EA4;
+	  background-color: #EEEEEE;
+	  width: 80%;
+	  text-align: left;
+	
+	}
+	table.blueTable td, table.blueTable th {
+	  border: 1px solid #AAAAAA;
+	  padding: 1px 1px;
+	}
+	table.blueTable tbody td {
+	  font-size: 10px;
+	  font-weight: bold;  
+	}
+	table.blueTable tr:nth-child(even) {
+	  background: #D0E4F5;
+	}
+	table.blueTable thead {
+	  background: #1C6EA4;
+	  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  border-bottom: 2px solid #444444;
+	}
+	table.blueTable thead th {
+	  font-size: 10px;
+	  font-weight: bold;
+	  color: #FFFFFF;
+	  border-left: 2px solid #D0E4F5;
+	}
+	table.blueTable thead th:first-child {
+	  border-left: none;
+	}
+	
+	table.blueTable tfoot {
+
+	  font-size: 14px;
+	  font-weight: bold;
+	  color:#070B00;
+	  background: #D0E4F5;
+	  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  border-top: 2px solid #444444; 
+	}
+	table.blueTable tfoot td {
+	  font-size: 14px;
+	}
+	
+	
+	</style>	
+	
+	';
+	$tabel_result1.='
+	<button type="button" id="export2" dataTglAwal="'.$tgl_awal.'" dataTglAkhir="'.$tgl_akhir.'"  class=""   >Export2</button>			
+';
+	$tabel_result1.='
+
+
+	<table class="blueTable">
+	<thead>
+	<tr>
+	<th width="10%">WILAYAH</th>
+	<th width="10%">EDC</th>
+	<th width="10%">YAP</th>
+	<th width="10%">TOTAL</th>
+	<th width="10%">#</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+
+	';
+
+
+	$tot=0;
+	$tot1=0;
+	$tot2=0;
+	$total=0;	
+// 
+	foreach ($report as $r)
+	{
+
+// total
+$tot1+=$r->JUMLAH_EDC;
+$tot2+=$r->JUMLAH_YAP;
+$total =$tot1+$tot2;
+// total
+
+
+$jumlah =$r->JUMLAH_EDC+$r->JUMLAH_YAP;		
+
+	$tabel_result1.='
+	<tr>
+	<td>'.$r->WILAYAH.'</td>
+	<td>'.$r->JUMLAH_EDC.'</td>
+	<td>'.$r->JUMLAH_YAP.'</td>
+	<td>'.$jumlah.'</td>
+	<td>
+	<button type="button" id="detail_modal2" dataTglAwal="'.$tgl_awal.'" dataTglAkhir="'.$tgl_akhir.'" dataWilayah="'.$r->WILAYAH.'" class=""   >Detail</button>			
+	</td>
+	</tr>
+	';
+
+}
+// end forech
+
+	$tabel_result1.='
+	<tfoot>
+	<tr >
+	<td >TOTAL</td>
+	<td>'.$tot1.'</td>
+	<td>'.$tot2.'</td>
+	<td>'.$total.'</td>
+	<td></td>
+	</tr>
+	</tfoot>
+	';
+	
+	$tabel_result1.='
+	</tbody>
+	</table>
+
+	
+	';
+
+	echo $tabel_result1;
+
+
+}
+
+
+
+//export excel
+//generate1 
+//klik generate action ajax
+public function get_export1($bulan,$tahun){
+
+
+	// $this->data['no_ktp'] = $ktp;
+
+// $report = $this->model_Report->get_report($bulan,$tahun);
+$report = $this->model_mismer_detail->getresult2($bulan,$tahun);
+
+
+
+$tabel_result1='';
+
+header("Content-type: application/vnd-ms-excel");
+ 
+// Mendefinisikan nama file ekspor "hasil-export.xls"
+header("Content-Disposition: attachment; filename=".$bulan."-".$tahun.".xls");
+
+// $tabel_result1 .= '
+// header("Content-Disposition: attachment; filename=sss.xls")';
+
+// $tabel_result1.='
+// <style>
+// table.blueTable {
+//   border: 1px solid #1C6EA4;
+//   background-color: #EEEEEE;
+//   width: 80%;
+//   text-align: left;
+
+// }
+// table.blueTable td, table.blueTable th {
+//   border: 1px solid #AAAAAA;
+//   padding: 1px 1px;
+// }
+// table.blueTable tbody td {
+//   font-size: 10px;
+//   font-weight: bold;  
+// }
+// table.blueTable tr:nth-child(even) {
+//   background: #D0E4F5;
+// }
+// table.blueTable thead {
+//   background: #1C6EA4;
+//   background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+//   background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+//   background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+//   border-bottom: 2px solid #444444;
+// }
+// table.blueTable thead th {
+//   font-size: 10px;
+//   font-weight: bold;
+//   color: #FFFFFF;
+//   border-left: 2px solid #D0E4F5;
+// }
+// table.blueTable thead th:first-child {
+//   border-left: none;
+// }
+
+// table.blueTable tfoot {
+
+//   font-size: 14px;
+//   font-weight: bold;
+//   color:#070B00;
+//   background: #D0E4F5;
+//   background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+//   background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+//   background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+//   border-top: 2px solid #444444; 
+// }
+// table.blueTable tfoot td {
+//   font-size: 14px;
+// }
+
+
+// </style>
+	
+
+// ';
+
+$tabel_result1.='
+<table border=1>
+<thead>
+<tr>
+<th width="10%">WILAYAH</th>
+<th width="10%">EDC</th>
+<th width="10%">YAP</th>
+<th width="10%">TOTAL</th>
+<th width="10%">#</th>
+</tr>
+</thead>
+
+<tbody>
+
+';
+
+
+$tot=0;
+$tot1=0;
+$tot2=0;
+$total=0;	
+
+foreach ($report as $r)
+{
+
+// total
+$tot1+=$r->JUMLAH_EDC;
+$tot2+=$r->JUMLAH_YAP;
+$total =$tot1+$tot2;
+// total
+
+
+$jumlah =$r->JUMLAH_EDC+$r->JUMLAH_YAP;		
+
+$tabel_result1.='
+<tr>
+<td>'.$r->WILAYAH.'</td>
+<td>'.$r->JUMLAH_EDC.'</td>
+<td>'.$r->JUMLAH_YAP.'</td>
+<td>'.$jumlah.'</td>
+<td>
+<button type="button" id="detail_modal1" dataTahun="'.$tahun.'" dataBulan="'.$bulan.'" dataWilayah="'.$r->WILAYAH.'" class="">Detail</button>			
+</td>
+</tr>
+';
+
+}
+// end forech
+
+$tabel_result1.='
+<tfoot>
+<tr >
+<td >TOTAL</td>
+<td>'.$tot1.'</td>
+<td>'.$tot2.'</td>
+<td>'.$total.'</td>
+<td></td>
+</tr>
+</tfoot>
+';
+
+$tabel_result1.='
+</table>
+
+
+';
+
+echo $tabel_result1;
+
+
+
+	// $tabel ='';
+	// echo $tabel;
+
+
+}
+
+
+//get export2
+//generate2 
+//klik generate action ajax
+public function get_export2($tgl_awal,$tgl_akhir){
+
+
+	$tgl_awal= date("Y-m-d",strtotime($tgl_awal));
+	$tgl_akhir= date("Y-m-d",strtotime($tgl_akhir));
+
+	// $report = $this->model_Report->get_report_between($tgl_awal,$tgl_akhir);
+	$report = $this->model_mismer_detail->getResult1($tgl_awal,$tgl_akhir);
+
+
+
+	$tabel_result1='';
+
+	header("Content-type: application/vnd-ms-excel");
+ 
+	// Mendefinisikan nama file ekspor "hasil-export.xls"
+	header("Content-Disposition: attachment; filename=".$tgl_awal."-".$tgl_akhir.".xls");
+
+	$tabel_result1.='
+	
+	<style>
+	table.blueTable {
+	  border: 1px solid #1C6EA4;
+	  background-color: #EEEEEE;
+	  width: 80%;
+	  text-align: left;
+	
+	}
+	table.blueTable td, table.blueTable th {
+	  border: 1px solid #AAAAAA;
+	  padding: 1px 1px;
+	}
+	table.blueTable tbody td {
+	  font-size: 10px;
+	  font-weight: bold;  
+	}
+	table.blueTable tr:nth-child(even) {
+	  background: #D0E4F5;
+	}
+	table.blueTable thead {
+	  background: #1C6EA4;
+	  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  border-bottom: 2px solid #444444;
+	}
+	table.blueTable thead th {
+	  font-size: 10px;
+	  font-weight: bold;
+	  color: #FFFFFF;
+	  border-left: 2px solid #D0E4F5;
+	}
+	table.blueTable thead th:first-child {
+	  border-left: none;
+	}
+	
+	table.blueTable tfoot {
+
+	  font-size: 14px;
+	  font-weight: bold;
+	  color:#070B00;
+	  background: #D0E4F5;
+	  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  border-top: 2px solid #444444; 
+	}
+	table.blueTable tfoot td {
+	  font-size: 14px;
+	}
+	
+	
+	</style>	
+	
+	';
+	$tabel_result1.='
+	<table class="blueTable">
+	<thead>
+	<tr>
+	<th width="10%">WILAYAH</th>
+	<th width="10%">EDC</th>
+	<th width="10%">YAP</th>
+	<th width="10%">TOTAL</th>
+	<th width="10%">#</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+
+	';
+
+
+	$tot=0;
+	$tot1=0;
+	$tot2=0;
+	$total=0;	
+// 
+	foreach ($report as $r)
+	{
+
+// total
+$tot1+=$r->JUMLAH_EDC;
+$tot2+=$r->JUMLAH_YAP;
+$total =$tot1+$tot2;
+// total
+
+
+$jumlah =$r->JUMLAH_EDC+$r->JUMLAH_YAP;		
+
+	$tabel_result1.='
+	<tr>
+	<td>'.$r->WILAYAH.'</td>
+	<td>'.$r->JUMLAH_EDC.'</td>
+	<td>'.$r->JUMLAH_YAP.'</td>
+	<td>'.$jumlah.'</td>
+	<td>
+	<button type="button" id="detail_modal2" dataTglAwal="'.$tgl_awal.'" dataTglAkhir="'.$tgl_akhir.'" dataWilayah="'.$r->WILAYAH.'" class=""   >Detail</button>			
+	</td>
+	</tr>
+	';
+
+}
+// end forech
+
+	$tabel_result1.='
+	<tfoot>
+	<tr >
+	<td >TOTAL</td>
+	<td>'.$tot1.'</td>
+	<td>'.$tot2.'</td>
+	<td>'.$total.'</td>
+	<td></td>
+	</tr>
+	</tfoot>
+	';
+	
+	$tabel_result1.='
+	</tbody>
+	</table>
+
+	
+	';
+
+	echo $tabel_result1;
+
+
+}
+
+
+
+
+
+
 	public function index($offset = 0)
 	{
 		$this->is_allowed('mismer_detail_list');
@@ -328,7 +960,7 @@ class Mismer_detail extends Admin
 	}
 
 // ==============
-public function report()
+public function report2()
 {
 
 

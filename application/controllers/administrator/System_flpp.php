@@ -1938,7 +1938,18 @@ $bunga = $bunga2 ;
 	//total flpp per batch
 	function batch_total($batch_id){
 
+		// cek count angsuran_detail ehere batch_id
+		// jika 0 jalankan generate_angsuran_detail
+		$count_all = $this->db->query("SELECT COUNT(*) as count_batch from angsuran_detail where batch_id=$batch_id")->row();
 
+// print_r($count_all->count_batch);die();
+		if($count_all->count_batch==0){
+// print_r('0000000000000');
+$this->gen_angsuran_detail_all($batch_id);
+		}
+
+
+		
 
 		$temp_array_total = $this->db->query("
 		

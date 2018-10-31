@@ -45,6 +45,8 @@ jQuery(document).ready(domo);
    <div class="row" >
       
       <div class="col-md-12">
+
+      
          <div class="box box-warning">
             <div class="box-body ">
                <!-- Widget: user widget style 1 -->
