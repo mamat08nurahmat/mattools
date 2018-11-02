@@ -43,10 +43,10 @@ $result =		$this->model_system_flpp->get_all_where($where);
 
 // print_r($result);die();
 		$tabel='';
-		$tabel.='xxxxxxxxxxxxxxxxxxxxxx';
+		// $tabel.='xxxxxxxxxxxxxxxxxxxxxx';
 /*
 */		
-$tabel.=$batch_id;
+// $tabel.=$batch_id;
 $tabel.='
 <style>
 table.blueTable {
@@ -142,19 +142,131 @@ $tabel.='
 <td>'.$r->NILAI_FLPP.'</td>
 <td>'.$r->batch_id.'</td>
 <td>
-<a href="'.site_url('administrator/system_flpp/get_detail_id/' . $r->NO_KTP_PEMOHON).'" >DETAIL</a> 
-
+<button type="button" id="export_detail" dataKTP="'.$r->NO_KTP_PEMOHON.'" class="">Export</button>
+|
+<button type="button" id="detail_modal1" dataKTP="'.$r->NO_KTP_PEMOHON.'"  class="">Detail</button>			
 </td>
 </tr>
 ';
+//modal???
+// <button type="button" id="detail_modal1" dataKTP="'.$r->NO_KTP_PEMOHON.'"  class="">Detail</button>			
+
+
 endforeach;
 $tabel.='
 </tbody>
 </table> 
 ';
 
+// <a href="'.site_url('administrator/system_flpp/get_detail_id/' . $r->NO_KTP_PEMOHON).'" >DETAIL</a>
 		echo $tabel;
 	}
+
+
+//modal view ajax
+// MODAL result1
+public function getModalResult1($KTP){
+
+	// $query = $this->model_Report->getModal_between($tgl_awal,$tgl_akhir,$wilayah);
+	// $query = $this->model_mismer_detail->getModalResult1($tgl_awal,$tgl_akhir,$wilayah);
+	//print_r($query);die();
+	
+	$tabel='';
+	
+	
+	
+	// -------------
+// 	$tabel.='
+// 	<div class="modal-content">
+
+// 			<div class="modal-header">
+// <center>
+// 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+// <h4 class="modal-title" id="myModalLabel">Detail xxxxx </h4>
+// <h5 class="modal-title" id="myModalLabel">xxxxxxxxxx</h5>
+// </center>
+// 			</div>
+// 			<div class="modal-body">
+// 	 ';
+// -------------
+
+	$tabel.='
+	<center>
+	<table class="blueTable">
+	<thead>
+		 <tr>
+
+				<th>CHANNEL</th>
+				<th>JUMLAH YAP</th>
+				<th>JUMLAH EDC</th>
+				<th>TOTAL</th>
+
+		 </tr>
+	</thead>';
+
+
+// 	$tabel.='
+// 			<tbody>';
+
+// 			$tot=0;
+// 			$tot1=0;
+// 			$tot2=0;
+// 			$total=0;
+
+
+// 	foreach ($query as $q) {
+// $jumlah = $q->JUMLAH_YAP+$q->JUMLAH_EDC;
+
+// $tot1+=$q->JUMLAH_EDC;
+// $tot2+=$q->JUMLAH_YAP;
+
+// $total =$tot1+$tot2;
+
+// 			$tabel.='
+// <tr>
+
+// 			<td>'.$q->CHANNEL.'</td>
+// 			<td></td>
+// 			<td>'.$q->JUMLAH_EDC.'</td>
+// 			<td></td>
+// </tr>';
+
+// }
+
+
+// $tabel.='</tbody>';
+
+// $tabel.='
+// <tfoot>
+// <tr>
+// <td>TOTAL</td>
+// <td>'.$tot2.'</td>
+// <td>'.$tot1.'</td>
+// <td>'.$total.'</td>
+// </tr>
+// </tfoot>
+// ';
+
+$tabel.='
+	</table>
+	</center>		
+	';
+// ------------
+
+$tabel.='
+
+</div>
+
+
+</div>
+	';
+
+
+echo $tabel;
+}	
+
+
+
 
 
 
@@ -548,6 +660,253 @@ print_r('xxxxxxxxxx');
 	die();
 
 }
+
+public function get_detail_ktp($ktp)
+{
+	
+	// $where = array(
+	// 	'NO_KTP_PEMOHON' => $ktp,	
+	// );
+	
+	// $this->data['system_flpp'] = $this->model_system_flpp->find($id);
+	// $get_single = $this->model_system_flpp->get_all_where($where);
+	$result = $this->db->query("
+	select 
+
+ ad.no,ad.tahun,ad.bulan,ad.outstanding,ad.angsuran_pokok,ad.angsuran_bunga,ad.angsuran_total,ad.no_ktp_pemohon,ad.batch_id
+,sf.nama_pemohon,sf.tenor,sf.tgl_akad 
+--	,sf.*
+	 from angsuran_detail ad
+	 left join system_flpp sf on ad.no_ktp_pemohon = sf.no_ktp_pemohon
+	 where ad.NO_KTP_PEMOHON='$ktp'
+	 order by ad.no asc
+		")->result();
+
+
+
+	// print_r($result[0]->nama_pemohon);die();
+
+	$tabel='';
+
+	
+
+	
+	$tabel.='
+	
+	<style>
+	table.blueTable {
+	  border: 1px solid #1C6EA4;
+	  background-color: #EEEEEE;
+	  width: 80%;
+	  text-align: left;
+	
+	}
+	table.blueTable td, table.blueTable th {
+	  border: 1px solid #AAAAAA;
+	  padding: 1px 1px;
+	}
+	table.blueTable tbody td {
+	  font-size: 13px;
+	  font-weight: bold;  
+	}
+	table.blueTable tr:nth-child(even) {
+	  background: #D0E4F5;
+	}
+	table.blueTable thead {
+	  background: #1C6EA4;
+	  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+	  border-bottom: 2px solid #444444;
+	}
+	table.blueTable thead th {
+	  font-size: 15px;
+	  font-weight: bold;
+	  color: #FFFFFF;
+	  border-left: 2px solid #D0E4F5;
+	}
+	table.blueTable thead th:first-child {
+	  border-left: none;
+	}
+	
+	table.blueTable tfoot {
+	  font-size: 14px;
+	  font-weight: bold;
+	  color:#070B00;
+	  background: #D0E4F5;
+	  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+	  border-top: 2px solid #444444; 
+	}
+	table.blueTable tfoot td {
+	  font-size: 14px;
+	}
+
+	
+	</style>	
+	
+	';
+	
+	$tabel.='<center>';
+	$tabel.='NAMA   PEMOHON : '.$result[0]->nama_pemohon.'<br>';
+	$tabel.='NO KTP PEMOHON : '.$ktp;
+	
+
+	$tabel.='<br><hr>';
+	// $tabel.='<button type="button" id="export_detail" dataKTP="'.$ktp.'" class="">Export Detail</button>';
+	$tabel.='
+	<table class="blueTable">
+	<thead>
+	<tr>
+	<th>NO</th>
+	<th>Y</th>
+	<th>M</th>
+	<th>OUTSTANDING</th>
+	<th>ANGSURAN_POKOK</th>
+	<th>ANGSURAN_BUNGA</th>
+	<th>ANGSURAN_TOTAL</th>
+	</tr>
+	</thead>
+	';
+
+	$sum_outstanding 	=0;
+	$sum_angsuran_pokok =0;	
+	$sum_angsuran_bunga =0;	
+	$sum_angsuran_total =0;
+
+foreach($result as $r):
+	$sum_outstanding += $r->outstanding;	
+	$sum_angsuran_pokok += $r->angsuran_pokok;	
+	$sum_angsuran_bunga += $r->angsuran_bunga;	
+	$sum_angsuran_total += $r->angsuran_total;
+
+	$tabel.='<tr>';
+	$tabel.='<td>'.$r->no.'</td>';
+	$tabel.='<td>'.$r->tahun.'</td>';
+	$tabel.='<td>'.baca_bulan($r->bulan).'</td>';
+	$tabel.='<td>'.currency_format($r->outstanding).'</td>';
+	$tabel.='<td>'.currency_format($r->angsuran_pokok).'</td>';
+	$tabel.='<td>'.currency_format($r->angsuran_bunga).'</td>';
+	$tabel.='<td>'.currency_format($r->angsuran_total).'</td>';
+	$tabel.='</tr>';
+endforeach;	
+	// $tabel.='';
+
+
+	// $tabel.='<tfoot>';
+	$tabel.='<tr>';
+	$tabel.='<td colspan=3>TOTAL</td>';
+	$tabel.='<td>'.currency_format($sum_outstanding).'</td>';
+	$tabel.='<td>'.currency_format($sum_angsuran_pokok).'</td>';
+	$tabel.='<td>'.currency_format($sum_angsuran_bunga).'</td>';
+	$tabel.='<td>'.currency_format($sum_angsuran_total).'</td>';
+	$tabel.='</tr>';
+	// $tabel.='</tfoot>';
+	
+
+	$tabel.='</table>';
+
+
+		echo $tabel;
+
+}
+
+
+
+
+public function get_export_ktp($ktp)
+{
+	
+	// $where = array(
+	// 	'NO_KTP_PEMOHON' => $ktp,	
+	// );
+	
+	// $this->data['system_flpp'] = $this->model_system_flpp->find($id);
+	// $get_single = $this->model_system_flpp->get_all_where($where);
+	$result = $this->db->query("
+	select 
+no,tahun,bulan,outstanding,angsuran_pokok,angsuran_bunga,angsuran_total,no_ktp_pemohon,batch_id
+ from angsuran_detail where NO_KTP_PEMOHON='$ktp'
+ order by no asc
+	")->result();
+
+	// print_r($result);die();
+
+	$tabel='';
+	$tabel_result1='';
+
+	header("Content-type: application/vnd-ms-excel");
+	 
+	// Mendefinisikan nama file ekspor "hasil-export.xls"
+	header("Content-Disposition: attachment; filename=FLPP_".$ktp.".xls");
+	
+
+	// $tabel.='';
+	// $tabel.='NAMA PEMOHON : '.$;
+	$tabel.='NO KTP PEMOHON : '.$ktp;
+	$tabel.='<br><hr>';
+	// $tabel.='<center>';
+	// $tabel.='</center>';
+	$tabel.='
+	<table border=1>
+	<thead>
+	<tr>
+	<th>NO</th>
+	<th>Y</th>
+	<th>M</th>
+	<th>OUTSTANDING</th>
+	<th>ANGSURAN_POKOK</th>
+	<th>ANGSURAN_BUNGA</th>
+	<th>ANGSURAN_TOTAL</th>
+	</tr>
+	</thead>
+	';
+
+	$sum_outstanding 	=0;
+	$sum_angsuran_pokok =0;	
+	$sum_angsuran_bunga =0;	
+	$sum_angsuran_total =0;
+
+foreach($result as $r):
+	$sum_outstanding += $r->outstanding;	
+	$sum_angsuran_pokok += $r->angsuran_pokok;	
+	$sum_angsuran_bunga += $r->angsuran_bunga;	
+	$sum_angsuran_total += $r->angsuran_total;
+
+	$tabel.='<tr>';
+	$tabel.='<td>'.$r->no.'</td>';
+	$tabel.='<td>'.$r->tahun.'</td>';
+	$tabel.='<td>'.$r->bulan.'</td>';
+	$tabel.='<td>'.$r->outstanding.'</td>';
+	$tabel.='<td>'.$r->angsuran_pokok.'</td>';
+	$tabel.='<td>'.$r->angsuran_bunga.'</td>';
+	$tabel.='<td>'.$r->angsuran_total.'</td>';
+	$tabel.='</tr>';
+endforeach;	
+	// $tabel.='';
+
+
+	// $tabel.='<tfoot>';
+	$tabel.='<tr>';
+	$tabel.='<td colspan=3>TOTAL</td>';
+	$tabel.='<td>'.$sum_outstanding.'</td>';
+	$tabel.='<td>'.$sum_angsuran_pokok.'</td>';
+	$tabel.='<td>'.$sum_angsuran_bunga.'</td>';
+	$tabel.='<td>'.$sum_angsuran_total.'</td>';
+	$tabel.='</tr>';
+	// $tabel.='</tfoot>';
+	
+
+	$tabel.='</table>';
+
+
+	$tabel.='</center>';	
+
+		echo $tabel;
+
+}
+
 
 public function get_detail_id($ktp)
 {
@@ -1137,39 +1496,40 @@ private function _gen($id)
             // $y =  date('Y', strtotime($date));
     
             // $m_time =   strtotime($date);
-
-            $y =  date('Y', strtotime($tgl_akad));
-            $m_time =   strtotime($tgl_akad);
-
-
-            $m2 =  date('m', strtotime("+".$no." months",$m_time));
-            $m1 = (string)$m2;            
-            // $m1 = '$m1';
-            $y1 =  date('Y', strtotime("+".$no." months",$m_time));
-
-            $rate          = ($bunga_kpr/100) / 12; // 3.5% interest paid at the end of every month
-            $periods       = ($tenor/12) * 12;    // 30-year mortgage
-
-            $present_value_ipmt = -1 * abs($nilai_kpr); //IPMT NILAI_KPR    // Mortgage note of $265,000.00
-            $present_value_ppmt = -1 * abs($nilai_flpp); //PPMT NILAI_FLPP    // Mortgage note of $265,000.00
-
-            
-            $future_value  = 0;
-            $beginning     = false;      // Adjust the payment to the beginning or end of the period
-            // $pmt           = Finance::pmt($rate, $periods, $present_value, $future_value, $beginning);
-            
-            // Interest on a financial payment for a loan or annuity with compound interest.
-            $period = $no; // First payment period
-            $ipmt   = Finance::ipmt($rate, $period, $periods, $present_value_ipmt, $future_value, $beginning);
-            
-//$ipmt = round($ipmt,0);
-// Principle on a financial payment for a loan or annuity with compound interest
-
-// $present_value = -115200000; //PPMT
-            $ppmt = Finance::ppmt($rate, $period, $periods, $present_value_ppmt, $future_value = 0, $beginning);            
-  
-//$ppmt = round($ppmt,0);
-//------------------------
+			$y =  date('Y', strtotime($tgl_akad));
+			$m_time =   strtotime($tgl_akad);
+			
+			
+			$m2 =  date('m', strtotime("+".$no." months",$m_time));
+			$m1 = (string)$m2;            
+			// $m1 = '$m1';
+			$y1 =  date('Y', strtotime("+".$no." months",$m_time));
+			
+			$rate          = ($bunga_kpr/100) / 12; // 3.5% interest paid at the end of every month
+			$periods       = ($tenor/12) * 12;    // 30-year mortgage
+			
+			$present_value_ipmt = -1 * abs($nilai_kpr); //IPMT NILAI_KPR    // Mortgage note of $265,000.00
+			$present_value_ppmt = -1 * abs($nilai_flpp); //PPMT NILAI_FLPP    // Mortgage note of $265,000.00
+			
+			
+			$future_value  = 0;
+			$beginning     = false;      // Adjust the payment to the beginning or end of the period
+			// $pmt           = Finance::pmt($rate, $periods, $present_value, $future_value, $beginning);
+			
+			// Interest on a financial payment for a loan or annuity with compound interest.
+			$period = $no; // First payment period
+			$ipmt   = Finance::ipmt($rate, $period, $periods, $present_value_ipmt, $future_value, $beginning);
+			
+			//$ipmt = round($ipmt,0);
+			// Principle on a financial payment for a loan or annuity with compound interest
+			
+			// $present_value = -115200000; //PPMT
+			$ppmt = Finance::ppmt($rate, $period, $periods, $present_value_ppmt, $future_value = 0, $beginning);            
+			
+			//$ppmt = round($ppmt,0);
+			//------------------------
+			/*
+			*/
             
             // print_r(round($ipmt,0));
             // print_r('<hr>');
@@ -1181,8 +1541,8 @@ $data_array[] = array(
     // 'BatchID' => $batch_id,
     // 'NO_KTP_PEMOHON' => $no_ktp_pemohon,
     'NO' => $no,
-    // 'Y' => $y1, 
-    // 'M' => $m1,
+    'Y' => $y1, 
+    'M' => $m1,
     // 'PPMT' =>$ppmt,
     'IPMT' =>$ipmt
      
@@ -1202,7 +1562,7 @@ print_r($data_array);die();
 
 
 //pengembalian tes
-public function pengembalian_tes($id){
+public function pengembalian_tes($id=2680){ //ROBBY FAHRIYANTO BAtch 123 tes
 
 	$system_flpp = $this->model_system_flpp->find($id);
 
@@ -1227,61 +1587,87 @@ public function pengembalian_tes($id){
 	
 	
 	$bunga_kpr =$system_flpp->SUKU_BUNGA_KPR; //bunga
+//=========================
+// $rate          = 0.035 / 12; // 3.5% interest paid at the end of every month
+$rate          = ($bunga_kpr/100) / 12; // 3.5% interest paid at the end of every month
+// $periods       = 30 * 12;    // 30-year mortgage
+$periods       = ($tenor/12) * 12;    // 30-year mortgage
+// $present_value = 265000;     // Mortgage note of $265,000.00
+$present_value_ipmt = $nilai_kpr; //IPMT NILAI_KPR    // Mortgage note of $265,000.00
+$present_value_ppmt = $nilai_flpp; //PPMT NILAI_FLPP    // Mortgage note of $265,000.00
 
-	// print_r($no_ktp_pemohon);
-	// print_r('<hr>');
-	// print_r($tgl_akad);
-	// print_r('<hr>');
-	// print_r($tenor);
+$future_value  = 9;
+$beginning     = false;      // Adjust the payment to the beginning or end of the period
+// $pmt           = Finance::pmt($rate, $periods, $present_value, $future_value, $beginning);
+
+// Interest on a financial payment for a loan or annuity with compound interest.
+//LOOP!!!!!!!!!!!!
+$period = 10; // First payment period
+
+$ipmt   = Finance::ipmt($rate, $period, $periods, $present_value_ipmt, $future_value, $beginning);
+
+// Principle on a financial payment for a loan or annuity with compound interest
+$ppmt = Finance::ppmt($rate, $period, $periods, $present_value_ppmt, $future_value = 0, $beginning);
+
+print_r('ipmt : '.$ipmt);
+print_r('<hr>');
+print_r('ppmt : '.$ppmt);
+//==========================
+/*
+// print_r($no_ktp_pemohon);
+// print_r('<hr>');
+// print_r($tgl_akad);
+// print_r('<hr>');
+// print_r($tenor);
 
 //        $tenor=120;
-	$no=1;
-	for ($x = 0; $x < $tenor; $x++):
-		$no=$x+1;
-		// print_r($no);
-		// print_r('<hr>');
+$no=1;
+for ($x = 0; $x < $tenor; $x++):
+	$no=$x+1;
+	// print_r($no);
+	// print_r('<hr>');
 
-		// $date = '25/05/2010';
-		// $date = str_replace('/', '-', $date);
-		// $y =  date('Y', strtotime($date));
+	// $date = '25/05/2010';
+	// $date = str_replace('/', '-', $date);
+	// $y =  date('Y', strtotime($date));
 
-		// $m_time =   strtotime($date);
+	// $m_time =   strtotime($date);
 
-		$y =  date('Y', strtotime($tgl_akad));
-		$m_time =   strtotime($tgl_akad);
+	$y =  date('Y', strtotime($tgl_akad));
+	$m_time =   strtotime($tgl_akad);
 
 
-		$m2 =  date('m', strtotime("+".$no." months",$m_time));
-		$m1 = (string)$m2;            
-		// $m1 = '$m1';
-		$y1 =  date('Y', strtotime("+".$no." months",$m_time));
+	$m2 =  date('m', strtotime("+".$no." months",$m_time));
+	$m1 = (string)$m2;            
+	// $m1 = '$m1';
+	$y1 =  date('Y', strtotime("+".$no." months",$m_time));
 
-		$rate          = ($bunga_kpr/100) / 12; // 3.5% interest paid at the end of every month
-		$periods       = ($tenor/12) * 12;    // 30-year mortgage
+	$rate          = ($bunga_kpr/100) / 12; // 3.5% interest paid at the end of every month
+	$periods       = ($tenor/12) * 12;    // 30-year mortgage
 
-		$present_value_ipmt = -1 * abs($nilai_kpr); //IPMT NILAI_KPR    // Mortgage note of $265,000.00
-		$present_value_ppmt = -1 * abs($nilai_flpp); //PPMT NILAI_FLPP    // Mortgage note of $265,000.00
+	$present_value_ipmt = -1 * abs($nilai_kpr); //IPMT NILAI_KPR    // Mortgage note of $265,000.00
+	$present_value_ppmt = -1 * abs($nilai_flpp); //PPMT NILAI_FLPP    // Mortgage note of $265,000.00
 
-		
-		$future_value  = 0;
-		$beginning     = false;      // Adjust the payment to the beginning or end of the period
-		// $pmt           = Finance::pmt($rate, $periods, $present_value, $future_value, $beginning);
-		
-		// Interest on a financial payment for a loan or annuity with compound interest.
-		$period = $no; // First payment period
-		$ipmt   = Finance::ipmt($rate, $period, $periods, $present_value_ipmt, $future_value, $beginning);
-		
+	
+	$future_value  = 0;
+	$beginning     = false;      // Adjust the payment to the beginning or end of the period
+	// $pmt           = Finance::pmt($rate, $periods, $present_value, $future_value, $beginning);
+	
+	// Interest on a financial payment for a loan or annuity with compound interest.
+	$period = $no; // First payment period
+	$ipmt   = Finance::ipmt($rate, $period, $periods, $present_value_ipmt, $future_value, $beginning);
+	
 //$ipmt = round($ipmt,0);
 // Principle on a financial payment for a loan or annuity with compound interest
 
 // $present_value = -115200000; //PPMT
-		$ppmt = Finance::ppmt($rate, $period, $periods, $present_value_ppmt, $future_value = 0, $beginning);            
+	$ppmt = Finance::ppmt($rate, $period, $periods, $present_value_ppmt, $future_value = 0, $beginning);            
 
 //$ppmt = round($ppmt,0);
 //------------------------
-		
-		// print_r(round($ipmt,0));
-		// print_r('<hr>');
+	
+	// print_r(round($ipmt,0));
+	// print_r('<hr>');
 
 
 //========array loop
@@ -1294,110 +1680,18 @@ $data_array[] = array(
 'M' => $m1,
 'PPMT' =>$ppmt,
 'IPMT' =>$ipmt
- 
+
 
 );
 //========
 
 
-	endfor;
+endfor;
 
 
 print_r($data_array);die();		
-
-// return	$cek = $this->db->insert_batch('pengembalian', $data_array);
-
-
-/* 
-
-		$results=$this->db->query("SELECT * FROM pengembalian WHERE BatchID=$batch_id ORDER BY Y,M,BatchID ")->result();
-		$results_sf =$this->db->query("SELECT * FROM system_flpp WHERE batch_id=$batch_id  ")->result();
-		// print_r($results_sf);die();
-		$this->data['results'] = $results;
-		$this->data['results_sf'] = $results_sf;
-
-
-		$table = '';
-		$table .= '<table border=1 >';
-		
-		
-		$table .= '<thead>';
-		$table .= '<tr>';
-		$table .= '<th>NO</th>';
-		$table .= '<th>NAMA_PEMOHON</th>';
-		$table .= '<th>NILAI_KPR</th>';
-		$table .= '<th>SUKU_BUNGA_KPR</th>';
-		$table .= '<th>TENOR</th>';
-		$table .= '<th>ANGSURAN_KPR</th>';
-		$table .= '<th>NILAI_FLPP</th>';
-		$table .= '<th>TGL_AKAD</th>';
-
-$max_tenor=240;		
-for($i=1;$i<=$max_tenor;$i++){
-			$table .= '<th>'.$i.'</th>';
-
-
-}
-		// if($type='PPMT'){
-		// 	$table .= '<th>PPMT</th>';
-		// }else{
-		// 	$table .= '<th>IPMT</th>';
-		// }
-
-		// foreach($results_sf as $sf):
-		// 	$detail_loop = $this->db->query("SELECT * FROM pengembalian WHERE NO_KTP_PEMOHON=$sf->NO_KTP_PEMOHON")->row();
-		// 	$loop='XXXX';
-		// 	// print_r($detail_loop);
-		// // $table .= '<th>LOOP</th>';
-		// 		// foreach($detail_loop as $loop):
-		// 			$table .= '<th>'.$loop.'</th>';
-		// 		// endforeach;
-		// endforeach;
-
-		$table .= '</tr>';
-		$table .= '</thead>';
-		
-		$no=1;		
-		foreach($results_sf as $sf):
-				$table .= '<tbody>';
-				$table .= '<tr>';
-				$table .= '<td>'.$no++.'</td>';
-				$table .= '<td>'.$sf->NAMA_PEMOHON.'</td>';
-				$table .= '<td>'.$sf->NILAI_KPR.'</td>';
-				$table .= '<td>'.$sf->SUKU_BUNGA_KPR.'</td>';
-				$table .= '<td>'.$sf->TENOR.'</td>';
-				$table .= '<td>'.$sf->ANGSURAN_KPR.'</td>';
-				$table .= '<td>'.$sf->NILAI_FLPP.'</td>';
-				$table .= '<td>'.$sf->TGL_AKAD.'</td>';
-		
-
-				$detail_loop = $this->db->query("SELECT * FROM pengembalian WHERE NO_KTP_PEMOHON=$sf->NO_KTP_PEMOHON")->result();
-
-					foreach($detail_loop as $loop):
-//Tarif FLPP = 75% * (Bunga FLPP/Bunga KPR Sejahtera) * Tarif KPR Sejahtera
-					$tarif_flpp = 	(75/100) * ((0.5/100)/(5/100)) * $loop->IPMT;					
-					if($type == 'PPMT'){
-						$table .= '<td>'.round($loop->PPMT,0).'</td>';
-					}elseif($type == 'IPMT'){
-						$table .= '<td>'.round($loop->IPMT,0).'</td>';
-					}else{
-						$table .= '<td>'.round($tarif_flpp,0).'</td>';
-					}
-					// $table .= '<td>'.$loop->IPMT.'</td>';
-
-					endforeach;
-
-						$table .= '</tr>';
-						$table .= '</tbody>';		
-		endforeach;
-
-		
-		$table .= '</table>';
-
-		echo $table;die();
-
-
 */
+
 
 }
 
@@ -1944,8 +2238,7 @@ $bunga = $bunga2 ;
 
 // print_r($count_all->count_batch);die();
 		if($count_all->count_batch==0){
-// print_r('0000000000000');
-$this->gen_angsuran_detail_all($batch_id);
+			$this->gen_angsuran_detail_all($batch_id);
 		}
 
 
@@ -2031,7 +2324,11 @@ table.blueTable tfoot td {
 ';
 
 
-// $tabel .= '';
+$tabel .= '
+<button type="button" id="export_total" dataBatchID="'.$batch_id.'" class="">Export</button>
+
+';
+
 $tabel .= '<table class="blueTable">';
 
 $tabel .= '
@@ -2065,11 +2362,11 @@ $total_pokok = (bunga() * $tot->sum_angsuran_pokok);
 	<tr>
 	<td>'.$no++.'</td>
 	<td>'.$tot->tahun.'</td>
-	<td>'.$tot->bulan.'</td>
-	<td>'.$tot->sum_outstanding.'</td>
-	<td>'.$total_pokok.'</td>
-	<td>'.$tot->sum_angsuran_bunga.'</td>
-	<td>'.$tot->sum_angsuran_total.'</td>
+	<td>'.baca_bulan($tot->bulan).'</td>
+	<td>'.currency_format($tot->sum_outstanding).'</td>
+	<td>'.currency_format($total_pokok).'</td>
+	<td>'.currency_format($tot->sum_angsuran_bunga).'</td>
+	<td>'.currency_format($tot->sum_angsuran_total).'</td>
 	</tr>
 	';
 	
@@ -2087,10 +2384,10 @@ $tabel .= '
 <tr>
 <td colspan="3">TOTAL</td>
 
-<td>'.$tot_outstanding.'</td>
-<td>'.$tot_angsuran_pokok.'</td>
-<td>'.$tot_angsuran_bunga.'</td>
-<td>'.$tot_angsuran_total.'</td>
+<td>'.currency_format($tot_outstanding).'</td>
+<td>'.currency_format($tot_angsuran_pokok).'</td>
+<td>'.currency_format($tot_angsuran_bunga).'</td>
+<td>'.currency_format($tot_angsuran_total).'</td>
 </tr>
 ';
 
@@ -2145,9 +2442,11 @@ $tabel = '';
 
 
 
-// $tabel .= '
-// header("Content-Disposition: attachment; filename='$batch_id'.xls");
-// ';
+header("Content-type: application/vnd-ms-excel");
+	 
+// Mendefinisikan nama file ekspor "hasil-export.xls"
+header("Content-Disposition: attachment; filename=FLPP_TOTAL_BATCH_".$batch_id.".xls");
+
 
 $tabel .= '<table border=1>';
 

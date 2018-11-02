@@ -25,6 +25,10 @@ class ComposerStaticInit13e7765008d9187172b77548f69c8496
         array (
             'Psr\\Log\\' => 8,
         ),
+        'M' => 
+        array (
+            'MathPHP\\' => 8,
+        ),
         'D' => 
         array (
             'DebugBar\\' => 9,
@@ -47,6 +51,10 @@ class ComposerStaticInit13e7765008d9187172b77548f69c8496
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'MathPHP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/markrogoyski/math-php/src',
         ),
         'DebugBar\\' => 
         array (

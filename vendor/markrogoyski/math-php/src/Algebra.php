@@ -168,10 +168,10 @@ class Algebra
      * @param  number $c constant coefficient
      * @param  bool $return_complex Whether to return complex numbers or NANs if imaginary roots
      *
-     * @return array  [x₁, x₂]           roots of the equation, or
-     *                [NAN, NAN]         if discriminant is negative, or
-     *                [Complex, Complex] if discriminant is negative and complex option is on or
-     *                [x]                if a = 0 and formula isn't quadratics
+     * @return float[]|Complex[]  [x₁, x₂]           roots of the equation, or
+     *                            [NAN, NAN]         if discriminant is negative, or
+     *                            [Complex, Complex] if discriminant is negative and complex option is on or
+     *                            [x]                if a = 0 and formula isn't quadratics
      *
      * @throws Exception\IncorrectTypeException
      */
@@ -298,8 +298,8 @@ class Algebra
      * @param  number $a₀ constant coefficient
      * @param  bool $return_complex whether to return complex numbers
      *
-     * @return array of roots (three real roots, or one real root and two NANs because complex numbers not yet supported)
-     *                        (If $a₃ = 0, then only two roots of quadratic equation)
+     * @return float[]|Complex[] array of roots (three real roots, or one real root and two NANs because complex numbers not yet supported)
+     *                           (If $a₃ = 0, then only two roots of quadratic equation)
      *
      * @throws Exception\IncorrectTypeException
      */
@@ -339,7 +339,7 @@ class Algebra
         $T = Arithmetic::cubeRoot($R - sqrt($D));
 
         // All roots are real, and at least two are equal
-        if ($D === 0 || ($D > -self::ZERO_TOLERANCE && $D < self::ZERO_TOLERANCE)) {
+        if ($D == 0 || ($D > -self::ZERO_TOLERANCE && $D < self::ZERO_TOLERANCE)) {
             $z₁ = -$a₂ / 3 - ($S + $T) / 2;
             $z₂ = $S + $T - $a₂ / 3;
             $z₃ = -$a₂ / 3 - ($S + $T) / 2;
@@ -370,10 +370,10 @@ class Algebra
      * @param  number $a₃ z³          coefficient
      * @param  number $a₂ z²          coefficient
      * @param  number $a₁ z           coefficient
-     * @param  number $a₀ constant coefficient
-     * @param  bool $return_complex whether to return complex numbers
+     * @param  number $a₀             constant coefficient
+     * @param  bool   $return_complex whether to return complex numbers
      *
-     * @return array of roots
+     * @return float[]|Complex[] array of roots
      *
      * @throws Exception\IncorrectTypeException
      */
@@ -392,7 +392,7 @@ class Algebra
         $a₄ = 1;
 
         // Has a zero root.
-        if ($a₀ === 0) {
+        if ($a₀ == 0) {
             return array_merge([0], self::cubic($a₄, $a₃, $a₂, $a₁, $return_complex));
         }
         

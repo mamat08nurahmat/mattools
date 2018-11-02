@@ -10,8 +10,8 @@
                 <div class="panel-heading">
                         <ul class="nav nav-tabs">
                         <!-- NAV TAB -->
-                            <li class="active"><a href="#tab1default" data-toggle="tab">Upload</a></li>
-                            <li><a href="#tab2default" data-toggle="tab">RESULT</a></li>
+                        <li class="active"><a href="#tab1default" data-toggle="tab">REPORT</a></li>
+                        <li><a href="#tab2default" data-toggle="tab">UPLOAD</a></li>
                             <!-- <li><a href="#tab3default" data-toggle="tab">TAB 3</a></li> -->
                         <!-- /NAV TAB -->        	
                         </ul>
@@ -26,7 +26,7 @@
 
 
  <!--TAB 1 Active  -->
- <div class="tab-pane fade in active" id="tab1default">
+ <div class="tab-pane fade" id="tab2default">
 
             <div class="box box-warning">
                 <div class="box-body ">
@@ -153,7 +153,7 @@
  <!--/TAB 1 Active  -->
 
 <!--TAB 2  -->
-<div class="tab-pane fade" id="tab2default">
+<div class="tab-pane fade in active" id="tab1default">
 
 <!-- /ISI/  -->
 <div class="box box-warning">
@@ -199,7 +199,7 @@
 
                             <div class="col-sm-1">
                             <a class="btn btn-flat btn-info generate " id="generate"  title="Generate">
-                            Generate
+                            Detail
                             </a>                            
                              </div>
 
@@ -288,6 +288,42 @@
     </div>
 </section>
 <!-- /.content -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="width:800px">
+
+            <!--  -->
+            <div class="modal-content">
+
+                <div class="modal-header">
+                <center>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <!-- <h4 class="modal-title" id="myModalLabel">Detail report Flpp </h4> -->
+                    <!-- <h5 class="modal-title" id="myModalLabel">Bulan :</h5> -->
+                </center>
+                </div>
+
+            <div class="modal-body">
+
+            <!--  -->
+            <span class="loading loading-hide">
+            <img src="<?= BASE_ASSET; ?>/img/loading-spin-primary.svg"> 
+            <i><?= cclang('loading_saving_data'); ?></i>
+            </span>
+
+            <div id="result_modal"></div>
+
+            <!--  -->
+            </div>
+
+            </div>
+            <!--  -->
+                </div>
+            </div>
+<!--MODAL-->
+
 <!-- Page script -->
 <script>
     $(document).ready(function(){
@@ -374,72 +410,6 @@
             
 		})
 
-
-            // .done(function(res) {
-            //     console.log('done');
-            // //     console.log(res);
-
-            // //     //   window.location.href = BASE_URL + 'administrator/system_flpp';
-            // } //done   
-
-        // .fail(function() {
-        //     console.log('fail');
-        //         // console.log(res);
-
-        // //   $('.message').printMessage({message : 'Error save data', type : 'warning'});
-        // })
-        // .always(function() {
-        //   $('.loading').hide();
-        //   $('html, body').animate({ scrollTop: $(document).height() }, 2000);
-        // });
-    
-        // return false;            
-// ============
-        // $('.message').fadeOut();
-            
-        // var form_system_flpp = $('#form_system_flpp');
-        // var data_post = form_system_flpp.serializeArray();
-        // var save_type = $(this).attr('data-stype');
-
-        // data_post.push({name: 'save_type', value: save_type});
-    
-        // $('.loading').show();
-    
-        // $.ajax({
-        //   url: BASE_URL + '/administrator/system_flpp/upload_save',
-        //   type: 'POST',
-        //   dataType: 'json',
-        //   data: data_post,
-        // })
-        // .done(function(res) {
-        //   if(res.success) {
-            
-        //     if (save_type == 'back') {
-        //       window.location.href = res.redirect;
-        //       return;
-        //     }
-    
-        //     $('.message').printMessage({message : res.message});
-        //     $('.message').fadeIn();
-        //     resetForm();
-        //     $('.chosen option').prop('selected', false).trigger('chosen:updated');
-                
-
-        //   } else {
-        //     $('.message').printMessage({message : res.message, type : 'warning'});
-        //   }
-    
-        // })
-        // .fail(function() {
-        //   $('.message').printMessage({message : 'Error save data', type : 'warning'});
-        // })
-        // .always(function() {
-        //   $('.loading').hide();
-        //   $('html, body').animate({ scrollTop: $(document).height() }, 2000);
-        // });
-    
-        // return false;
-
       }); 
       
       /*end btn save*/
@@ -482,49 +452,68 @@ console.log('generate...........');
 
 
 
-/*
-		$.ajax({
-			// url:"<?php echo base_url(); ?>administrator/system_flpp/import_batch/"+batch_id+"/"+month+"/"+year,
-			url:'<?= site_url('administrator/system_flpp/get_generate/') ?>'+batch_id,
-			method:"POST",
-            // data: data,
-            dataType: 'html',
-			// data:new FormData(this),
-			contentType:false,
-			cache:false,
-			processData:false,
-
-
-			beforeSend:function(){
-				// $('#import_csv_btn').html('Importing...');
-                console.log('beforeSend');
-
-			},
-			success:function(data)
-			{
-                console.log('success');
-                console.log(data);
-                $('#result2').html(data);
-
-                // window.location.href = BASE_URL + 'administrator/system_flpp';
-
-
-				// $('#import_csv')[0].reset();
-				// $('#import_csv_btn').attr('disabled', false);
-				// $('#import_csv_btn').html('Import Done');
-				// load_data();
-			}
-
-            
-		})
-*/
-
-
-
-
         }); 
 
 //Generate total batch
+
+//modal klik
+// detail1 click
+$(document).on('click', '#detail_modal1', function (e) {
+
+
+let KTP = $(this).attr('dataKTP');
+
+console.log('modal show');
+// console.log(KTP);
+
+$('#myModal').modal('show');
+
+var url='<?= site_url('administrator/system_flpp/get_detail_ktp/') ?>'+KTP;
+// $('#result_modal').load(url);
+
+    $.ajax({
+        url: url, 
+
+	beforeSend:function(){
+		$('#result_modal').html('Generate.....');
+       console.log('beforeSend');
+
+			},
+    success: function(result){
+        console.log('success');
+		// $('#result_modal').html('success');
+        $("#result_modal").html(result);
+    }
+    
+    });
+
+
+});
+
+//export excel klik btn on modal
+$(document).on('click', '#export_detail', function (e) {
+
+// console.log('klikkkkk');
+
+var dataKTP = $(this).attr('dataKTP');
+// var dataBulan = $(this).attr('dataBulan');
+// var Wilayah = $(this).attr('dataWilayah');
+
+// console.log(dataTahun);
+// console.log(dataBulan);
+// console.log(Wilayah);
+
+// $('#myModal').modal('show');
+
+//  var url='<?= site_url('administrator/report/getModal/') ?>'+dataTahun+'/'+dataBulan+'/'+Wilayah;
+var url='<?= site_url('administrator/system_flpp/get_export_ktp/') ?>'+dataKTP;
+window.location.href = url;
+// $('#result1').load(url);
+
+
+});
+
+
 
 
 
@@ -566,6 +555,32 @@ console.log('$this->gen_angsuran_detail_all($batch_id)');
 
 
 //generate total batch
+
+
+
+//export excel klik btn export total
+$(document).on('click', '#export_total', function (e) {
+
+// console.log('klikkkkk');
+
+var dataBatchID = $(this).attr('dataBatchID');
+// var dataBulan = $(this).attr('dataBulan');
+// var Wilayah = $(this).attr('dataWilayah');
+
+// console.log(dataTahun);
+// console.log(dataBulan);
+// console.log(Wilayah);
+
+// $('#myModal').modal('show');
+
+//  var url='<?= site_url('administrator/report/getModal/') ?>'+dataTahun+'/'+dataBulan+'/'+Wilayah;
+var url='<?= site_url('administrator/system_flpp/export_batch_total/') ?>'+dataBatchID;
+window.location.href = url;
+// $('#result1').load(url);
+
+
+});
+
 
     }); /*end doc ready*/
 </script>

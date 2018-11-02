@@ -421,3 +421,11 @@ DELETE  from mismer_unmatch where BatchID=concat(Y_Generate,M_Generate) AND IS_U
  
  -- =====================================================
  
+  SELECT *
+FROM mismer_detail
+LIMIT 100
+-- INTO OUTFILE '/var/lib/mysql-files/orders.csv'
+INTO OUTFILE 'C:/MISMER/mismer1.csv'
+FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
