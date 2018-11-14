@@ -38,8 +38,8 @@
                                 <img class="img-circle" src="<?= BASE_ASSET; ?>/img/add2.png" alt="User Avatar">
                             </div>
                             <!-- /.widget-user-image -->
-                            <h3 class="widget-user-username">Temp Upload Unmatch</h3>
-                            <h5 class="widget-user-desc"><?= cclang('new', ['Temp Upload Unmatch']); ?></h5>
+                            <h3 class="widget-user-username">Upload</h3>
+                            <h5 class="widget-user-desc"> System FLPP</h5>
                             <hr>
                         </div>
                         <?= form_open('', [
@@ -357,10 +357,14 @@
         // var data_post = form_system_flpp.serializeArray();
         // var save_type = $(this).attr('data-stype');
 
-        var data = new FormData();
-        jQuery.each(jQuery('#csv_file')[0].files, function(i, file) {
-            data.append('file-'+i, file);
-        });
+        // var data = new FormData();
+        // jQuery.each(jQuery('#csv_file')[0].files, function(i, file) {
+        //     data.append('file-'+i, file);
+        // });
+
+    var data = new FormData();
+    data.append('file', jQuery('#csv_file')[0].files); // since this is your file input
+
 
 
         // console.log('dattttttttttttaaaa');
@@ -370,15 +374,40 @@
         let batch_id= document.getElementById('batch_id').value;
         let month = document.getElementById('month').value;
         let year = document.getElementById('year').value;
-
+        // console.log(year);
 
         
         event.preventDefault();
+        var url='<?= site_url('administrator/system_flpp/import_batch_dev/') ?>'+batch_id+'/'+month+'/'+year;
 
+    $.ajax({
+        url: url, 
+            // method:"POST",
+            data: data,
+            // dataType: 'json',
 
+			// contentType:false,
+			// cache:false,
+			// processData:false,
+
+	beforeSend:function(){
+		// $('#result2').html('Generate.....');
+       console.log('beforeSend');
+
+			},
+    success: function(result){
+        console.log('success');
+        console.log(result);
+
+        // $("#result2").html(result);
+    }
+    
+    });
+
+/*
 		$.ajax({
 			// url:"<?php echo base_url(); ?>administrator/system_flpp/import_batch/"+batch_id+"/"+month+"/"+year,
-			url:'<?= site_url('administrator/system_flpp/import_batch/') ?>'+batch_id+'/'+month+'/'+year,
+			url:'<?= site_url('administrator/system_flpp/import_batch_dev/') ?>'+batch_id+'/'+month+'/'+year,
 			method:"POST",
             data: data,
             dataType: 'json',
@@ -409,6 +438,7 @@
 
             
 		})
+*/
 
       }); 
       

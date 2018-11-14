@@ -423,6 +423,17 @@ if(!function_exists('get_group_user')) {
 	}
 }
 
+
+// 
+if(!function_exists('get_user_data')) {
+	function get_user($id) {
+		$ci =& get_instance();
+		$user_id = $ci->session->userdata($id);
+		return $ci->aauth->get_user($user_id);
+
+	}
+}
+// 
 if(!function_exists('get_user_data')) {
 	function get_user_data($field_name = '') {
 		$ci =& get_instance();
