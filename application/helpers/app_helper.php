@@ -1,5 +1,23 @@
 <?php
 
+
+if(!function_exists('db_get_auto_increment')) {
+	function db_get_auto_increment($table_name) {
+		$ci =& get_instance();
+
+	  	$query = $ci->db->query("SELECT MAX(ID) +1 as ai from $table_name ")->row();
+		$ai =  $query->ai;
+
+		if($ai==0){
+			return 1 ;			
+		}
+
+	    return $ai ;
+	}
+}
+
+
+
 if(!function_exists('get_mysql_version')) {
 	function get_mysql_version() {
 		$mysql_info = explode(' ', mysqli_get_client_info());
