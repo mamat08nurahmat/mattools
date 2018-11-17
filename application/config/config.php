@@ -314,7 +314,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '$@f72&4ae5276*8c#b0^c9af8e3dff%7220fe3c*';
+$config['encryption_key'] = '07a17$07&385d3bab*b@%9d#c^*278e7a9229843';
 
 /*
 |--------------------------------------------------------------------------
@@ -368,7 +368,7 @@ $config['encryption_key'] = '$@f72&4ae5276*8c#b0^c9af8e3dff%7220fe3c*';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = '__8ssgosco4804cw0gwcw0wss4gs0k40cs404sc400';
+$config['sess_cookie_name'] = '__c4oogg0sos44kggg4os4scko404wkkgs8k0k8o44';
 $config['sess_expiration'] = 86400;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
@@ -439,8 +439,8 @@ $config['global_xss_filtering'] = FALSE;
 | 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
 $config['csrf_protection'] = TRUE;
-$config['csrf_token_name'] = '__wk804koko44cg8w4sgwk4g4csgkoocgss84sgcwk';
-$config['csrf_cookie_name'] = '__00s0sgg4kc8ogscgkoskkokwgo8og4ookk4wocow';
+$config['csrf_token_name'] = '__ws0ooocokk04wo0ok0os4o04c8s44kko00ow4o4g';
+$config['csrf_cookie_name'] = '__80cgs88sos4swkgks4w08ckww88cwoog0ww800sc';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array();
