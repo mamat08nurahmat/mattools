@@ -148,6 +148,7 @@ jQuery(document).ready(domo);
                      <div class="col-sm-2 padd-left-0 " >
                         <select type="text" class="form-control chosen chosen-select" name="bulk" id="bulk" placeholder="Site Email" >
                            <option value="">Bulk</option>
+                           <option value="approve">Approve</option>
                            <option value="delete">Delete</option>
                         </select>
                      </div>
@@ -228,8 +229,30 @@ jQuery(document).ready(domo);
 
       var bulk = $('#bulk');
       var serialize_bulk = $('#form_system_upload').serialize();
+//----------
+      if (bulk.val() == 'approve') {
+         swal({
+            title: "<?= cclang('are_you_sure'); ?>",
+            text: "APPROVE???",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes",
+            cancelButtonText: "<?= cclang('no_cancel_plx'); ?>",
+            closeOnConfirm: true,
+            closeOnCancel: true
+          },
+          function(isConfirm){
+            if (isConfirm) {
+               document.location.href = BASE_URL + '/administrator/system_upload/approve?' + serialize_bulk;      
+            }
+          });
 
-      if (bulk.val() == 'delete') {
+        return false;
+
+      } 
+//----------
+      else if (bulk.val() == 'delete') {
          swal({
             title: "<?= cclang('are_you_sure'); ?>",
             text: "<?= cclang('data_to_be_deleted_can_not_be_restored'); ?>",
@@ -249,7 +272,8 @@ jQuery(document).ready(domo);
 
         return false;
 
-      } else if(bulk.val() == '')  {
+      }       
+      else if(bulk.val() == '')  {
           swal({
             title: "Upss",
             text: "<?= cclang('please_choose_bulk_action_first'); ?>",

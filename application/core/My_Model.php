@@ -223,6 +223,16 @@ class MY_Model extends CI_Model {
         $this->pdf->writeHTML($content);
         $this->pdf->Output($table.'.pdf', 'H');
     }
+//-------------------
+public function get_all_where($where)
+{
+    $query = $this->db->get_where($this->table_name, $where);
+
+    return $query->result();
+}
+
+
+
 }
 
 /* End of file My_Model.php */

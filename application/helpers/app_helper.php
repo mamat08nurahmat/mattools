@@ -16,8 +16,92 @@ if(!function_exists('db_get_auto_increment')) {
 	}
 }
 
+// FLPP HELPER
+// system_flpp/report
+if(!function_exists('db_get_all_data_distinct_batch')) {
+	function db_get_all_data_distinct_batch($table_name = null, $where = false) {
+		$ci =& get_instance();
+		if ($where) {
+			$ci->db->where($where);
+		}
+	  	// $query = $ci->db->get($table_name);
+	  	$query = $ci->db->query("SELECT distinct batch_id FROM $table_name  ");
+
+	    return $query->result();
+	}
+}
+
+//yg belum di generate
+if(!function_exists('db_get_all_data_generate')) {
+	function db_get_all_data_generate($table_name = null, $where = false) {
+		$ci =& get_instance();
+		if ($where) {
+			$ci->db->where($where);
+		}
+	  	// $query = $ci->db->get($table_name);
+	  	$query = $ci->db->query("SELECT distinct batch_id FROM $table_name WHERE is_generate=0");
+
+	    return $query->result();
+	}
+}
 
 
+
+if ( ! function_exists('bunga'))
+{
+    function bunga()
+    {
+//        return 'Rp. '.number_format($number,0,',','.');
+//return 'bunga/100';
+$ci =& get_instance();
+  $query = $ci->db->query("
+select Bunga from Parameter where StartDate <= SYSDATE() AND EndDate >= SYSDATE()
+");
+$bunga = $query->row();
+
+  return ($bunga->Bunga/100) ;
+
+  }
+}
+
+
+
+if ( ! function_exists('currency_format'))
+{
+    function currency_format($number)
+    {
+        return 'Rp. '.number_format($number,0,',','.');
+    }
+}
+
+
+
+//baca bulan
+if(!function_exists('baca_bulan')) {
+	function baca_bulan($bulan_ke) {
+
+		$nama_bulan = array(
+			'1' => 'Januari',
+			'2' => 'Februari',
+			'3' => 'Maret',
+			'4' => 'April',
+			'5' => 'Mei',
+			'6' => 'Juni',
+			'7' => 'Juli',
+			'8' => 'Agustus',
+			'9' => 'September',
+			'10' => 'Oktober',
+			'11' => 'November',
+			'12' => 'Desember',
+		);
+
+return $nama_bulan[$bulan_ke];
+
+	}
+}
+
+
+//===================================================================
 if(!function_exists('get_mysql_version')) {
 	function get_mysql_version() {
 		$mysql_info = explode(' ', mysqli_get_client_info());
