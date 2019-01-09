@@ -1,5 +1,16 @@
 <?php
 
+if(!function_exists('db_auto_increment')) {
+	function db_auto_increment($table_name = null) {
+		$ci =& get_instance();
+	  	$query = $ci->db->query("SELECT max(id)+1 as id FROM $table_name")->row();
+
+	    return $query->id;
+	}
+}
+
+
+
 if(!function_exists('get_mysql_version')) {
 	function get_mysql_version() {
 		$mysql_info = explode(' ', mysqli_get_client_info());
@@ -55,6 +66,9 @@ if(!function_exists('db_get_all_data')) {
 	    return $query->result();
 	}
 }
+
+
+
 
 if(!function_exists('is_image')) {
 	function is_image($filename = '') {

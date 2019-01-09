@@ -579,6 +579,21 @@ class Form extends Admin
 		$this->render('backend/standart/administrator/form/form_view', $this->data);
 	}
 
+
+	//================
+	public function system_upload_incoming()
+	{
+		$this->is_allowed('form_view');
+		$id=2;
+		$this->data['form'] = $this->model_form->find($id);
+		$form_name = strtolower($this->data['form']->table_name);
+		// $this->data['view'] = $this->load->view('public/'.$form_name.'/' .$form_name, [], true);
+		$this->data['view'] = $this->load->view('public/'.$form_name.'/' .$form_name.'_incoming', [], true);
+
+		$this->template->title('Form View');
+		$this->render('backend/standart/administrator/form/form_view', $this->data);
+	}
+
 	/**
 	* View view form
 	*
