@@ -95,6 +95,7 @@ jQuery(document).ready(domo);
                            <th>BULAN</th>
                            <th>Generate At</th>
                            <th>Update At</th>
+                           <th>IS MATCH</th>
                            <th>Action</th>
                         </tr>
                      </thead>
@@ -120,6 +121,7 @@ jQuery(document).ready(domo);
                            <td><?= _ent($edc_unmatch->BULAN); ?></td> 
                            <td><?= _ent($edc_unmatch->generate_at); ?></td> 
                            <td><?= _ent($edc_unmatch->update_at); ?></td> 
+                           <td><?= _ent($edc_unmatch->IS_MATCH); ?></td> 
                            <td width="200">
                               <?php is_allowed('edc_unmatch_view', function() use ($edc_unmatch){?>
                               <a href="<?= site_url('administrator/edc_unmatch/view/' . $edc_unmatch->MID); ?>" class="label-default"><i class="fa fa-newspaper-o"></i> <?= cclang('view_button'); ?>
@@ -178,6 +180,7 @@ jQuery(document).ready(domo);
                            <option <?= $this->input->get('f') == 'BULAN' ? 'selected' :''; ?> value="BULAN">BULAN</option>
                            <option <?= $this->input->get('f') == 'generate_at' ? 'selected' :''; ?> value="generate_at">Generate At</option>
                            <option <?= $this->input->get('f') == 'update_at' ? 'selected' :''; ?> value="update_at">Update At</option>
+                           <option <?= $this->input->get('f') == 'IS_MATCH' ? 'selected' :''; ?> value="IS_MATCH">IS MATCH</option>
                           </select>
                      </div>
                      <div class="col-sm-1 padd-left-0 ">

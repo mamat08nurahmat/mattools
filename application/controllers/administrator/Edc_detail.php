@@ -556,13 +556,13 @@ echo $tabel_result1;
 	  					<th>TYPE_MID</th>
 	          			<th>WILAYAH</th>
 						<th>CHANNEL</th>
-						<th>TOTAL</th>
+						<th>JUMLAH</th>
 		
 				 </tr>
 			</thead>';
-		
+			$total=0;
 		foreach($query as $q ):
-
+			$total+=$q->JUM_TOT;
 			$tabel.='
 			<tbody>
 			<tr>
@@ -609,16 +609,14 @@ echo $tabel_result1;
 		
 		// $tabel.='</tbody>';
 		
-		// $tabel.='
-		// <tfoot>
-		// <tr>
-		// <td>TOTAL</td>
-		// <td>'.$tot2.'</td>
-		// <td>'.$tot1.'</td>
-		// <td>'.$total.'</td>
-		// </tr>
-		// </tfoot>
-		// ';
+		$tabel.='
+		<tfoot>
+		<tr>
+		<td colspan="3">TOTAL</td>
+		<td>'.$total.'</td>
+		</tr>
+		</tfoot>
+		';
 		
 		$tabel.='
 			</table>
@@ -897,8 +895,8 @@ $tabel_result1.='
 <table class="blueTable">
 <thead>
 <tr>
-<th width="10%">TYPE_MID</th>
 <th width="10%">WILAYAH</th>
+<th width="10%">TYPE_MID</th>
 <th width="10%">TAHUN</th>
 <th width="10%">BULAN</th>
 <th width="10%">JUMLAH</th>
@@ -1024,9 +1022,9 @@ echo $tabel_result1;
 		
 				 </tr>
 			</thead>';
-		
+			$total=0;
 		foreach($query as $q ):
-
+			$total+=$q->JUM_TOT;
 			$tabel.='
 			<tbody>
 			<tr>
@@ -1073,16 +1071,14 @@ echo $tabel_result1;
 		
 		// $tabel.='</tbody>';
 		
-		// $tabel.='
-		// <tfoot>
-		// <tr>
-		// <td>TOTAL</td>
-		// <td>'.$tot2.'</td>
-		// <td>'.$tot1.'</td>
-		// <td>'.$total.'</td>
-		// </tr>
-		// </tfoot>
-		// ';
+		$tabel.='
+		<tfoot>
+		<tr>
+		<td colspan="3">TOTAL</td>
+		<td>'.$total.'</td>
+		</tr>
+		</tfoot>
+		';
 		
 		$tabel.='
 			</table>
@@ -1277,6 +1273,188 @@ echo $tabel_result1;
 
 
 }		
+
+
+
+
+//export excel edc_unmatch 
+//klik generate action ajax
+public function get_export_edc_unmatch($tahun,$bulan){
+
+
+	// $this->data['no_ktp'] = $ktp;
+
+
+$report = $this->model_edc_detail->getExportEDCUnmatch($tahun,$bulan);
+
+// print_r($report);die();
+
+$tabel_result1='';
+
+header("Content-type: application/vnd-ms-excel");
+ 
+// Mendefinisikan nama file ekspor "hasil-export.xls"
+header("Content-Disposition: attachment; filename=EDC_UNMATCH_".$tahun."-".$bulan.".xls");
+
+// $tabel_result1 .= '
+// header("Content-Disposition: attachment; filename=sss.xls")';
+
+// $tabel_result1.='
+// <style>
+// table.blueTable {
+//   border: 1px solid #1C6EA4;
+//   background-color: #EEEEEE;
+//   width: 80%;
+//   text-align: left;
+
+// }
+// table.blueTable td, table.blueTable th {
+//   border: 1px solid #AAAAAA;
+//   padding: 1px 1px;
+// }
+// table.blueTable tbody td {
+//   font-size: 10px;
+//   font-weight: bold;  
+// }
+// table.blueTable tr:nth-child(even) {
+//   background: #D0E4F5;
+// }
+// table.blueTable thead {
+//   background: #1C6EA4;
+//   background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+//   background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+//   background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+//   border-bottom: 2px solid #444444;
+// }
+// table.blueTable thead th {
+//   font-size: 10px;
+//   font-weight: bold;
+//   color: #FFFFFF;
+//   border-left: 2px solid #D0E4F5;
+// }
+// table.blueTable thead th:first-child {
+//   border-left: none;
+// }
+
+// table.blueTable tfoot {
+
+//   font-size: 14px;
+//   font-weight: bold;
+//   color:#070B00;
+//   background: #D0E4F5;
+//   background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+//   background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+//   background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+//   border-top: 2px solid #444444; 
+// }
+// table.blueTable tfoot td {
+//   font-size: 14px;
+// }
+
+
+// </style>
+	
+
+// ';
+
+$tabel_result1.='
+<table border=1>
+<thead>
+<tr>
+<th width="10%">MID</th>
+<th width="10%">MERCHANT_DBA_NAME</th>
+<th width="10%">MSO</th>
+<th width="10%">SOURCE_CODE</th>
+<th width="10%">WILAYAH</th>
+<th width="10%">CHANNEL</th>
+<th width="10%">TAHUN</th>
+<th width="10%">BULAN</th>
+</tr>
+</thead>
+
+
+';
+
+foreach($report as $r):
+
+	$tabel_result1.='
+	<tr>
+	<td>'.$r->MID.'</td>
+	<td>'.$r->MERCHANT_DBA_NAME.'</td>
+	<td>'.$r->MSO.'</td>
+	<td>'.$r->SOURCE_CODE.'</td>
+	<td>'.$r->WILAYAH.'</td>
+	<td>'.$r->CHANNEL.'</td>
+	<td>'.$r->TAHUN.'</td>
+	<td>'.$r->BULAN.'</td>
+	</tr>
+	';	
+
+endforeach;	
+
+// <tbody>
+
+
+// $tot=0;
+// $tot1=0;
+// $tot2=0;
+// $total=0;	
+
+// foreach ($report as $r)
+// {
+
+// // total
+// $tot1+=$r->JUMLAH_EDC;
+// $tot2+=$r->JUMLAH_YAP;
+// $total =$tot1+$tot2;
+// // total
+
+
+// $jumlah =$r->JUMLAH_EDC+$r->JUMLAH_YAP;		
+
+// $tabel_result1.='
+// <tr>
+// <td>'.$r->WILAYAH.'</td>
+// <td>'.$r->JUMLAH_EDC.'</td>
+// <td>'.$r->JUMLAH_YAP.'</td>
+// <td>'.$jumlah.'</td>
+// <td>
+// <button type="button" id="detail_modal1" dataTahun="'.$tahun.'" dataBulan="'.$bulan.'" dataWilayah="'.$r->WILAYAH.'" class="">Detail</button>			
+// </td>
+// </tr>
+// ';
+
+// }
+// // end forech
+
+// $tabel_result1.='
+// <tfoot>
+// <tr >
+// <td >TOTAL</td>
+// <td>'.$tot1.'</td>
+// <td>'.$tot2.'</td>
+// <td>'.$total.'</td>
+// <td></td>
+// </tr>
+// </tfoot>
+// ';
+
+$tabel_result1.='
+</table>
+
+
+';
+
+echo $tabel_result1;
+
+
+
+	// $tabel ='';
+	// echo $tabel;
+
+
+}		
+
 
 }
 

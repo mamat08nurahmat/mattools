@@ -183,6 +183,14 @@ jQuery(document).ready(domo);
                            <?= _ent($edc_unmatch->update_at); ?>
                         </div>
                     </div>
+                                         
+                    <div class="form-group ">
+                        <label for="content" class="col-sm-2 control-label">IS MATCH </label>
+
+                        <div class="col-sm-8">
+                           <?= _ent($edc_unmatch->IS_MATCH); ?>
+                        </div>
+                    </div>
                                         
                     <br>
                     <br>

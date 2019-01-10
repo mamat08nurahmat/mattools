@@ -5,7 +5,7 @@ class Model_edc_unmatch extends MY_Model {
 
 	private $primary_key 	= 'MID';
 	private $table_name 	= 'edc_unmatch';
-	private $field_search 	= ['MERCHANT_DBA_NAME', 'STATUS_EDC', 'CITY', 'ID_NUMBER', 'MSO', 'SOURCE_CODE', 'POS_1', 'WILAYAH', 'CHANNEL', 'TYPE_MID', 'OPEN_DATE', 'TAHUN', 'BULAN', 'generate_at', 'update_at'];
+	private $field_search 	= ['MERCHANT_DBA_NAME', 'STATUS_EDC', 'CITY', 'ID_NUMBER', 'MSO', 'SOURCE_CODE', 'POS_1', 'WILAYAH', 'CHANNEL', 'TYPE_MID', 'OPEN_DATE', 'TAHUN', 'BULAN', 'generate_at', 'update_at', 'IS_MATCH'];
 
 	public function __construct()
 	{

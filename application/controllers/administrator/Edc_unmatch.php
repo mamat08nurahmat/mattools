@@ -109,6 +109,7 @@ class Edc_unmatch extends Admin
 				'BULAN' => $this->input->post('BULAN'),
 				'generate_at' => $this->input->post('generate_at'),
 				'update_at' => $this->input->post('update_at'),
+				'IS_MATCH' => $this->input->post('IS_MATCH'),
 			];
 
 			
@@ -214,6 +215,7 @@ class Edc_unmatch extends Admin
 				'BULAN' => $this->input->post('BULAN'),
 				'generate_at' => $this->input->post('generate_at'),
 				'update_at' => $this->input->post('update_at'),
+				'IS_MATCH' => $this->input->post('IS_MATCH'),
 			];
 
 			
