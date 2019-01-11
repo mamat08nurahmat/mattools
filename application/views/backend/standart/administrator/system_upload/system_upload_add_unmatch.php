@@ -45,6 +45,33 @@
 <section class="content">
     <div class="row" >
         <div class="col-md-12">
+<!-- ?? -->
+    <!-- //  panel with-nav-tabs-->
+    <div class="panel with-nav-tabs panel-default">
+
+                <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                        <!-- NAV TAB -->
+                            <li class="active"><a href="#tab1default" data-toggle="tab">UPLOAD UNMATCH</a></li>
+                            <li><a href="#tab2default" data-toggle="tab">EXPORT UNMATCH</a></li>
+                            <!-- <li><a href="#tab3default" data-toggle="tab">TAB 3</a></li> -->
+                        <!-- /NAV TAB -->        	
+                        </ul>
+                </div>
+
+                <div class="panel-body">
+<!-- // panel-body -->
+                 <div class="tab-content">
+<!-- // panel-content -->
+
+<!-- TAB PANEL CONTENT/  -->
+
+
+ <!--TAB 1 Active  -->
+ <div class="tab-pane fade in active" id="tab1default">
+<!--  ??-->
+
+            <!--box -->
             <div class="box box-warning">
                 <div class="box-body ">
                     <!-- Widget: user widget style 1 -->
@@ -69,7 +96,7 @@
                          
                                                 <div class="form-group ">
                             <label for="file_name" class="col-sm-2 control-label">File Upload Unmatch 
-                            <i class="required">*</i>
+                            <i class="required">save format CSV (comma delimiter) </i>
                             </label>
                             <div class="col-sm-8">
                                 <div id="system_upload_file_name_galery"></div>
@@ -81,7 +108,17 @@
                         </div>
 
                         <div class="form-group ">
-                        <label for="application_source" class="col-sm-2 control-label">SAMPLE UPLOAD<i class="required"><a href='<?=base_url('EDC_UNMATC_DEV.csv')?>' >KLIK</a></i>
+                        <label  class="col-sm-2 control-label"><i class="required"> sample file upload <a href='<?=base_url('EDC_UNMATC_DEV.csv')?>' >klik</a></i>
+
+                        <!-- MID 
+                        MERCHANT_DBA_NAME	
+                        MSO	
+                        SOURCE_CODE	
+                        WILAYAH	
+                        CHANNEL	
+                        TAHUN	
+                        BULAN -->
+
                             </label>                        
                         </div>                         
                                                 <!-- <div class="form-group ">
@@ -180,6 +217,134 @@
                 <!--/box body -->
             </div>
             <!--/box -->
+<!-- ?? -->
+<!-- /ISI/  -->
+</div>
+ <!--/TAB 1 Active  -->
+
+<!--TAB 2  -->
+<div class="tab-pane fade" id="tab2default">
+
+<!-- ?? -->
+
+<!-- 2 -->
+
+<div class="box box-warning">
+                <div class="box-body ">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user-2">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header ">
+                            <div class="widget-user-image">
+                                <img class="img-circle" src="<?= BASE_ASSET; ?>/img/add2.png" alt="User Avatar">
+                            </div>
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">EDC UNMATCH</h3>
+                            <h5 class="widget-user-desc">By Month</h5>
+                            <hr>
+                        </div>
+                        <?= form_open('', [
+                            'name'    => 'form_system_flpp', 
+                            'class'   => 'form-horizontal', 
+                            'id'      => 'form_system_flpp', 
+                            'enctype' => 'multipart/form-data', 
+                            'method'  => 'POST'
+                            ]); ?>
+                         
+                                                
+
+
+<!-- /form-group/  -->
+                            <div class="form-group ">
+                            <label for="RowID" class="col-sm-1 control-label">Month 
+                            <i class="required">*</i>
+                            </label>
+
+                            <div class="col-sm-2">
+
+                            <select name="month" id="month" class="form-control">
+                            <option value="1">Januari</option>
+                            <option value="2">Februari</option>
+                            <option value="3">Maret</option>
+                            <option value="4">April</option>
+                            <option value="5">Mei</option>
+                            <option value="6">Juni</option>
+                            <option value="7">Juli</option>
+                            <option value="8">Agustus</option>
+                            <option value="9">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                            </select>
+                            </div>
+
+                            <label for="RowID" class="col-sm-1 control-label">Year 
+                            <i class="required">*</i>
+                            </label>
+
+                            <div class="col-sm-2">
+
+                            <select name="year" id="year" class="form-control">
+                            <!-- <option value="2017">2017</option> -->
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            </select>
+
+                            </div>
+
+
+
+
+                            <div class="col-sm-1">
+                                <a class="btn btn-flat btn-info " id="download1"  title="download">
+                                DOWNLOAD</a>                            
+                            </div>
+
+                        </div>
+<!-- /end form-group/  -->
+
+
+
+
+
+                        <!--  -->
+                        <?= form_close(); ?>
+                    </div>
+                </div>
+                <!--/box body -->
+                <br>
+<!-- RESULT  -->
+<div id="result1"></div>
+
+
+ 
+                <!--/box body -->
+                </div>
+            <!--/box -->
+
+            </div>
+<!-- /TAB 2  -->
+
+
+
+
+<!-- END TAB PANEL CONTENT/  -->
+
+
+                    </div>
+<!-- // END panel-body -->
+                </div>
+<!-- // END panel-content -->
+
+            </div>
+ <!-- //END  panel with-nav-tabs-->
+       
+
+
+
+<!-- //  -->
+
+<!--  2-->
         </div>
     </div>
 </section>
@@ -310,7 +475,23 @@
       }); /*end file_name galery*/
               
  
-       
+    //  download edc_unmatch
+//btn download 1
+$(document).on('click', '#download1', function (e) {
+
+let month = document.getElementById('month').value;
+let year = document.getElementById('year').value;
+    // let type = document.getElementById('type').value;
+    console.log(month);
+    console.log(year);
+//  var url='<?= site_url('administrator/report/getModal/') ?>'+dataTahun+'/'+dataBulan+'/'+Wilayah;
+var url='<?= site_url('administrator/edc_detail/get_export_edc_unmatch/') ?>'+year+'/'+month;
+
+window.location.href = url;
+// $('#result1').load(url);
+
+
+});      
     
     
     }); /*end doc ready*/
