@@ -97,37 +97,126 @@ class Model_edc_detail extends MY_Model {
 //===============
 public function getResult1($bulan,$tahun,$type){
 
-if($type=='ALL'){
-	$ebk='
-	UNION
-		
+
+
+
+$edc='
+(SELECT 
+ TYPE_MID,
+WILAYAH,
+TAHUN,BULAN
+,SUM(POS_1) as JUMLAH
+
+FROM edc_detail where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL 
+AND WILAYAH!="GABUNGAN" AND WILAYAH!="EBK" AND CHANNEL!="EBK"
+GROUP BY 
+ TYPE_MID,
+WILAYAH,
+TAHUN,BULAN
+
+)
+
+UNION
+
+(SELECT 
+ TYPE_MID,
+WILAYAH,
+TAHUN,BULAN
+,SUM(POS_1) as JUMLAH
+
+FROM edc_unmatch where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL AND IS_MATCH=1
+AND WILAYAH!="GABUNGAN" AND WILAYAH!="EBK" AND CHANNEL!="EBK"
+GROUP BY 
+ TYPE_MID,
+WILAYAH,
+TAHUN,BULAN
+)
+
+
+';
+
+
+$yap='
+
+
+(SELECT 
+ TYPE_MID,
+WILAYAH,
+TAHUN,BULAN
+,SUM(POS_1) as JUMLAH
+
+FROM yap_detail 
+GROUP BY 
+ TYPE_MID,
+WILAYAH,
+TAHUN,BULAN
+)
+
+';
+
+
+$ebk='
+	
+
 	(SELECT 
 	 TYPE_MID,
 	WILAYAH,
-	-- CHANNEL,
 	TAHUN,BULAN
 	,SUM(POS_1) as JUMLAH
 	
-	FROM mattools_db.ebk_detail 
-	-- where BULAN=12 AND TAHUN=2018
+	FROM ebk_detail 
 	GROUP BY 
 	 TYPE_MID,
 	WILAYAH,
-	-- CHANNEL,
+
 	TAHUN,BULAN
 	)
+
+';
+
+
+
+if($type=='ALL'){
 	
+	$mis="	
+	$edc
+	UNION
+	$yap
+	UNION
+	$ebk
+	";
+
+}elseif($type=='SLN'){
+
+	$mis="	
+	$edc
+	UNION
+	$yap
+	";
+
+
+}elseif($type=='EDC'){
+	$mis="	
+	$edc
+	";
+
 	
-	';
-		
-
-}else{
-
-	$ebk='';
-
-}
+}elseif($type=='YAP'){
+	$mis="	
+	$yap
+	";
 
 	
+}elseif($type=='EBK'){
+
+	$mis="	
+	$ebk
+	";
+	
+}	
+
+
+
 
 	return $this->db->query("
 	SELECT 
@@ -139,62 +228,7 @@ SUM(JUMLAH) as JUM_TOT
 	from
 	(
 
-
-(SELECT 
- TYPE_MID,
-WILAYAH,
--- CHANNEL,
-TAHUN,BULAN
-,SUM(POS_1) as JUMLAH
-
-FROM mattools_db.edc_detail where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL 
- AND WILAYAH!='EBK' AND CHANNEL!='EBK'
-GROUP BY 
- TYPE_MID,
-WILAYAH,
--- CHANNEL,
-TAHUN,BULAN
-
-)
-
-UNION
-
-(SELECT 
- TYPE_MID,
-WILAYAH,
--- CHANNEL,
-TAHUN,BULAN
-,SUM(POS_1) as JUMLAH
-
-FROM mattools_db.edc_unmatch where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL AND IS_MATCH=1
-AND WILAYAH!='EBK' AND CHANNEL!='EBK'
-GROUP BY 
- TYPE_MID,
-WILAYAH,
--- CHANNEL,
-TAHUN,BULAN
-)
-
-
-UNION
-
-(SELECT 
- TYPE_MID,
-WILAYAH,
--- CHANNEL,
-TAHUN,BULAN
-,SUM(POS_1) as JUMLAH
-
-FROM mattools_db.yap_detail 
--- where BULAN=12 AND TAHUN=2018
-GROUP BY 
- TYPE_MID,
-WILAYAH,
--- CHANNEL,
-TAHUN,BULAN
-)
-
-$ebk
+$mis
 
 
 ORDER BY -- TYPE_MID,
@@ -233,7 +267,7 @@ public function getModalResult1($tahun,$bulan,$wilayah,$TYPE_MID){
 	TAHUN,BULAN
 	,SUM(POS_1) as JUMLAH
 	
-	FROM mattools_db.edc_detail where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL 
+	FROM edc_detail where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL 
 	-- AND BULAN=12 AND TAHUN=2018
 	GROUP BY 
 	 TYPE_MID,
@@ -252,7 +286,7 @@ public function getModalResult1($tahun,$bulan,$wilayah,$TYPE_MID){
 	TAHUN,BULAN
 	,SUM(POS_1) as JUMLAH
 	
-	FROM mattools_db.edc_unmatch where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL
+	FROM edc_unmatch where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL
 	-- AND BULAN=12 AND TAHUN=2018
 	GROUP BY 
 	 TYPE_MID,
@@ -271,7 +305,7 @@ public function getModalResult1($tahun,$bulan,$wilayah,$TYPE_MID){
 	TAHUN,BULAN
 	,SUM(POS_1) as JUMLAH
 	
-	FROM mattools_db.yap_detail 
+	FROM yap_detail 
 	-- where BULAN=12 AND TAHUN=2018
 	GROUP BY 
 	 TYPE_MID,
@@ -289,7 +323,7 @@ public function getModalResult1($tahun,$bulan,$wilayah,$TYPE_MID){
 	TAHUN,BULAN
 	,SUM(POS_1) as JUMLAH
 	
-	FROM mattools_db.ebk_detail 
+	FROM ebk_detail 
 	-- where BULAN=12 AND TAHUN=2018
 	GROUP BY 
 	 TYPE_MID,
@@ -336,7 +370,7 @@ WILAYAH,
 TAHUN,BULAN
 ,SUM(POS_1) as JUMLAH
 
-FROM mattools_db.edc_detail where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL 
+FROM edc_detail where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL 
 -- AND BULAN=12 AND TAHUN=2018
 GROUP BY 
  TYPE_MID,
@@ -355,7 +389,7 @@ WILAYAH,
 TAHUN,BULAN
 ,SUM(POS_1) as JUMLAH
 
-FROM mattools_db.edc_unmatch where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL
+FROM edc_unmatch where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL
 -- AND BULAN=12 AND TAHUN=2018
 GROUP BY 
  TYPE_MID,
@@ -374,7 +408,7 @@ WILAYAH,
 TAHUN,BULAN
 ,SUM(POS_1) as JUMLAH
 
-FROM mattools_db.yap_detail 
+FROM yap_detail 
 -- where BULAN=12 AND TAHUN=2018
 GROUP BY 
  TYPE_MID,
@@ -392,7 +426,7 @@ WILAYAH,
 TAHUN,BULAN
 ,SUM(POS_1) as JUMLAH
 
-FROM mattools_db.ebk_detail 
+FROM ebk_detail 
 -- where BULAN=12 AND TAHUN=2018
 GROUP BY 
  TYPE_MID,
@@ -416,66 +450,24 @@ ORDER BY WILAYAH,TAHUN,BULAN,JUM_TOT DESC
 
 
 
-
 public function getResult2($tgl_awal,$tgl_akhir,$type){
 
 
-	if($type=='ALL'){
-		$ebk='
-		UNION
-			
-		(SELECT 
-		 TYPE_MID,
-		WILAYAH,
-		-- CHANNEL,
-		TAHUN,BULAN
-		,OPEN_DATE
-		,SUM(POS_1) as JUMLAH
-		
-		FROM ebk_detail 
-		-- where BULAN=12 AND TAHUN=2018
-		GROUP BY 
-		 TYPE_MID,
-		WILAYAH,
-		-- CHANNEL,
-		-- OPEN_DATE,
-		TAHUN,BULAN
-		)
-		
-		';	
-		
-	}else{
-$ebk='';		
-	}
 
 
-	return $this->db->query("
-	SELECT 
-	TYPE_MID,
-	WILAYAH,
-	TAHUN,
-	BULAN,
-	-- OPEN_DATE,
-	SUM(JUMLAH) as JUM_TOT
-		from
-		(
-	
-	
+	$edc='
 	(SELECT 
-	TYPE_MID,
+	 TYPE_MID,
 	WILAYAH,
-	-- CHANNEL,
 	TAHUN,BULAN
-	 ,OPEN_DATE
+	,OPEN_DATE
 	,SUM(POS_1) as JUMLAH
 	
 	FROM edc_detail where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL 
-	AND WILAYAH!='EBK' AND CHANNEL!='EBK'
+	AND WILAYAH!="GABUNGAN" AND WILAYAH!="EBK" AND CHANNEL!="EBK"
 	GROUP BY 
 	 TYPE_MID,
 	WILAYAH,
-	-- CHANNEL,
-	-- OPEN_DATE,
 	TAHUN,BULAN
 	
 	)
@@ -485,56 +477,255 @@ $ebk='';
 	(SELECT 
 	 TYPE_MID,
 	WILAYAH,
-	-- CHANNEL,
 	TAHUN,BULAN
-	 ,OPEN_DATE
+	,OPEN_DATE
 	,SUM(POS_1) as JUMLAH
 	
 	FROM edc_unmatch where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL AND IS_MATCH=1
-	AND WILAYAH!='EBK' AND CHANNEL!='EBK'
-	-- AND BULAN=12 AND TAHUN=2018
+	AND WILAYAH!="GABUNGAN" AND WILAYAH!="EBK" AND CHANNEL!="EBK"
 	GROUP BY 
 	 TYPE_MID,
 	WILAYAH,
-	-- CHANNEL,
-	-- OPEN_DATE,
 	TAHUN,BULAN
 	)
 	
 	
-	UNION
+	';
+	
+	
+	$yap='
+	
 	
 	(SELECT 
 	 TYPE_MID,
 	WILAYAH,
-	-- CHANNEL,
 	TAHUN,BULAN
 	,OPEN_DATE
 	,SUM(POS_1) as JUMLAH
 	
 	FROM yap_detail 
-	-- where BULAN=12 AND TAHUN=2018
 	GROUP BY 
-	TYPE_MID,
+	 TYPE_MID,
 	WILAYAH,
-	-- CHANNEL,
-	-- OPEN_DATE,
 	TAHUN,BULAN
 	)
 	
-$ebk
+	';
 	
-	ORDER BY  
-	WILAYAH,TYPE_MID,TAHUN,BULAN,JUMLAH DESC
+	
+	$ebk='
+		
+	
+		(SELECT 
+		 TYPE_MID,
+		WILAYAH,
+		TAHUN,BULAN
+		,OPEN_DATE
+		,SUM(POS_1) as JUMLAH
+		
+		FROM ebk_detail 
+		GROUP BY 
+		 TYPE_MID,
+		WILAYAH,
+	
+		TAHUN,BULAN
+		)
+	
+	';
+	
+	
+	
+	if($type=='ALL'){
+		
+		$mis="	
+		$edc
+		UNION
+		$yap
+		UNION
+		$ebk
+		";
+	
+	}elseif($type=='SLN'){
+	
+		$mis="	
+		$edc
+		UNION
+		$yap
+		";
+	
+	
+	}elseif($type=='EDC'){
+		$mis="	
+		$edc
+		";
+	
+		
+	}elseif($type=='YAP'){
+		$mis="	
+		$yap
+		";
+	
+		
+	}elseif($type=='EBK'){
+	
+		$mis="	
+		$ebk
+		";
+		
+	}	
+	
+	
+	
+	
+		return $this->db->query("
+		SELECT 
+	WILAYAH,
+	TYPE_MID,
+	TAHUN,
+	BULAN,
+	SUM(JUMLAH) as JUM_TOT
+		from
+		(
+	
+	$mis
+	
+	
+	ORDER BY -- TYPE_MID,
+	WILAYAH,TAHUN,BULAN,JUMLAH DESC
 	) x
-	WHERE -- TAHUN=2018 AND BULAN=12
-	OPEN_DATE >= '$tgl_awal' AND OPEN_DATE <= '$tgl_akhir'
-	-- AND WILAYAH='WMO'
-	GROUP BY WILAYAH,TYPE_MID
-	,TAHUN,BULAN
-	ORDER BY TYPE_MID,WILAYAH,TAHUN,BULAN,JUM_TOT DESC	
-	")->result();
-}
+	 	WHERE 
+	 	OPEN_DATE >= '$tgl_awal' AND OPEN_DATE <= '$tgl_akhir'
+	 	GROUP BY WILAYAH,TYPE_MID
+	 	,TAHUN,BULAN
+	 	ORDER BY TYPE_MID,WILAYAH,TAHUN,BULAN,JUM_TOT DESC	
+		")->result();
+	
+	
+	
+	
+	}
+
+
+// public function getResult2($tgl_awal,$tgl_akhir,$type){
+
+
+// 	if($type=='ALL'){
+// 		$ebk='
+// 		UNION
+			
+// 		(SELECT 
+// 		 TYPE_MID,
+// 		WILAYAH,
+// 		-- CHANNEL,
+// 		TAHUN,BULAN
+// 		,OPEN_DATE
+// 		,SUM(POS_1) as JUMLAH
+		
+// 		FROM ebk_detail 
+// 		-- where BULAN=12 AND TAHUN=2018
+// 		GROUP BY 
+// 		 TYPE_MID,
+// 		WILAYAH,
+// 		-- CHANNEL,
+// 		-- OPEN_DATE,
+// 		TAHUN,BULAN
+// 		)
+		
+// 		';	
+		
+// 	}else{
+// $ebk='';		
+// 	}
+
+
+// 	return $this->db->query("
+// 	SELECT 
+// 	TYPE_MID,
+// 	WILAYAH,
+// 	TAHUN,
+// 	BULAN,
+// 	-- OPEN_DATE,
+// 	SUM(JUMLAH) as JUM_TOT
+// 		from
+// 		(
+	
+	
+// 	(SELECT 
+// 	TYPE_MID,
+// 	WILAYAH,
+// 	-- CHANNEL,
+// 	TAHUN,BULAN
+// 	 ,OPEN_DATE
+// 	,SUM(POS_1) as JUMLAH
+	
+// 	FROM edc_detail where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL 
+// 	AND WILAYAH!='EBK' AND CHANNEL!='EBK'
+// 	GROUP BY 
+// 	 TYPE_MID,
+// 	WILAYAH,
+// 	-- CHANNEL,
+// 	-- OPEN_DATE,
+// 	TAHUN,BULAN
+	
+// 	)
+	
+// 	UNION
+	
+// 	(SELECT 
+// 	 TYPE_MID,
+// 	WILAYAH,
+// 	-- CHANNEL,
+// 	TAHUN,BULAN
+// 	 ,OPEN_DATE
+// 	,SUM(POS_1) as JUMLAH
+	
+// 	FROM edc_unmatch where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL AND IS_MATCH=1
+// 	AND WILAYAH!='EBK' AND CHANNEL!='EBK'
+// 	-- AND BULAN=12 AND TAHUN=2018
+// 	GROUP BY 
+// 	 TYPE_MID,
+// 	WILAYAH,
+// 	-- CHANNEL,
+// 	-- OPEN_DATE,
+// 	TAHUN,BULAN
+// 	)
+	
+	
+// 	UNION
+	
+// 	(SELECT 
+// 	 TYPE_MID,
+// 	WILAYAH,
+// 	-- CHANNEL,
+// 	TAHUN,BULAN
+// 	,OPEN_DATE
+// 	,SUM(POS_1) as JUMLAH
+	
+// 	FROM yap_detail 
+// 	-- where BULAN=12 AND TAHUN=2018
+// 	GROUP BY 
+// 	TYPE_MID,
+// 	WILAYAH,
+// 	-- CHANNEL,
+// 	-- OPEN_DATE,
+// 	TAHUN,BULAN
+// 	)
+	
+// $ebk
+	
+// 	ORDER BY  
+// 	WILAYAH,TYPE_MID,TAHUN,BULAN,JUMLAH DESC
+// 	) x
+// 	WHERE -- TAHUN=2018 AND BULAN=12
+// 	OPEN_DATE >= '$tgl_awal' AND OPEN_DATE <= '$tgl_akhir'
+// 	-- AND WILAYAH='WMO'
+// 	GROUP BY WILAYAH,TYPE_MID
+// 	,TAHUN,BULAN
+// 	ORDER BY TYPE_MID,WILAYAH,TAHUN,BULAN,JUM_TOT DESC	
+// 	")->result();
+// }
+
+
 public function getModalResult2($tgl_awal,$tgl_akhir,$wilayah,$TYPE_MID){
 	return $this->db->query("
 	SELECT 
@@ -662,7 +853,7 @@ WILAYAH,
  OPEN_DATE,
  TAHUN,BULAN
 ,SUM(POS_1) as JUMLAH
-FROM mattools_db.edc_detail where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL 
+FROM edc_detail where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL 
 -- AND BULAN=12 AND TAHUN=2018
 GROUP BY 
  TYPE_MID,
@@ -679,7 +870,7 @@ WILAYAH,
  OPEN_DATE,
  TAHUN,BULAN
 ,SUM(POS_1) as JUMLAH
-FROM mattools_db.edc_unmatch where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL
+FROM edc_unmatch where WILAYAH IS NOT NULL AND CHANNEL IS NOT NULL
 -- AND BULAN=12 AND TAHUN=2018
 GROUP BY 
  TYPE_MID,
@@ -696,7 +887,7 @@ WILAYAH,
  OPEN_DATE,
  TAHUN,BULAN
 ,SUM(POS_1) as JUMLAH
-FROM mattools_db.yap_detail 
+FROM yap_detail 
 -- where BULAN=12 AND TAHUN=2018
 GROUP BY 
  TYPE_MID,
@@ -713,7 +904,7 @@ WILAYAH,
  OPEN_DATE,
  TAHUN,BULAN
 ,SUM(POS_1) as JUMLAH
-FROM mattools_db.ebk_detail 
+FROM ebk_detail 
 -- where BULAN=12 AND TAHUN=2018
 GROUP BY 
  TYPE_MID,
@@ -747,7 +938,7 @@ public function getExportEDCUnmatch($tahun,$bulan){
 	CHANNEL,
 	TAHUN,
 	BULAN
-	FROM mattools_db.edc_unmatch
+	FROM edc_unmatch
 	WHERE IS_MATCH=0
 	AND TAHUN='$tahun'
 	AND BULAN='$bulan'

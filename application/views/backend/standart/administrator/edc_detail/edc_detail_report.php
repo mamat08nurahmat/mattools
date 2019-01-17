@@ -85,8 +85,8 @@
 
                             <select name="year" id="year" class="form-control">
                             <!-- <option value="2017">2017</option> -->
-                            <option value="2018">2018</option>
                             <option value="2019">2019</option>
+                            <option value="2018">2018</option>
                             </select>
 
                             </div>
@@ -99,6 +99,9 @@
                             <!-- <option value="2017">2017</option> -->
                             <option value="ALL">ALL</option>
                             <option value="SLN">SLN</option>
+                            <option value="EDC">EDC</option>
+                            <option value="YAP">YAP</option>
+                            <option value="EBK">EBK</option>
                             </select>
 
                             </div>
@@ -192,6 +195,9 @@
                             <!-- <option value="2017">2017</option> -->
                             <option value="ALL">ALL</option>
                             <option value="SLN">SLN</option>
+                            <option value="EDC">EDC</option>
+                            <option value="YAP">YAP</option>
+                            <option value="EBK">EBK</option>
                             </select>
 
                             </div>

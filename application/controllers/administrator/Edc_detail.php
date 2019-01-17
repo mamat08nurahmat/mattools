@@ -460,37 +460,7 @@ $tabel_result1.='
 
 endforeach;
 
-// $tot=0;
-// $tot1=0;
-// $tot2=0;
-// $total=0;	
 
-// foreach ($report as $r)
-// {
-
-// // total
-// $tot1+=$r->JUMLAH_EDC;
-// $tot2+=$r->JUMLAH_YAP;
-// $total =$tot1+$tot2;
-// // total
-
-
-// $jumlah =$r->JUMLAH_EDC+$r->JUMLAH_YAP;		
-
-// $tabel_result1.='
-// <tr>
-// <td>'.$r->WILAYAH.'</td>
-// <td>'.$r->JUMLAH_EDC.'</td>
-// <td>'.$r->JUMLAH_YAP.'</td>
-// <td>'.$jumlah.'</td>
-// <td>
-// <button type="button" id="detail_modal1" dataTahun="'.$tahun.'" dataBulan="'.$bulan.'" dataWilayah="'.$r->WILAYAH.'" class="">Detail</button>			
-// </td>
-// </tr>
-// ';
-
-// }
-// // end forech
 
 $tabel_result1.='
 </tbody>
@@ -580,36 +550,7 @@ echo $tabel_result1;
 		endforeach;
 
 		
-		// 	$tabel.='
-		// 			<tbody>';
-		
-		// 			$tot=0;
-		// 			$tot1=0;
-		// 			$tot2=0;
-		// 			$total=0;
-		
-		
-		// 	foreach ($query as $q) {
-		// $jumlah = $q->JUMLAH_YAP+$q->JUMLAH_EDC;
-		
-		// $tot1+=$q->JUMLAH_EDC;
-		// $tot2+=$q->JUMLAH_YAP;
-		
-		// $total =$tot1+$tot2;
-		
-		// 			$tabel.='
-		// <tr>
-		
-		// 			<td>'.$q->CHANNEL.'</td>
-		// 			<td></td>
-		// 			<td>'.$q->JUMLAH_EDC.'</td>
-		// 			<td></td>
-		// </tr>';
-		
-		// }
-		
-		
-		// $tabel.='</tbody>';
+
 		
 		$tabel.='
 		<tfoot>
@@ -658,66 +599,7 @@ header("Content-type: application/vnd-ms-excel");
 // Mendefinisikan nama file ekspor "hasil-export.xls"
 header("Content-Disposition: attachment; filename=REPORT_MISMER_".$bulan."-".$tahun.".xls");
 
-// $tabel_result1 .= '
-// header("Content-Disposition: attachment; filename=sss.xls")';
 
-// $tabel_result1.='
-// <style>
-// table.blueTable {
-//   border: 1px solid #1C6EA4;
-//   background-color: #EEEEEE;
-//   width: 80%;
-//   text-align: left;
-
-// }
-// table.blueTable td, table.blueTable th {
-//   border: 1px solid #AAAAAA;
-//   padding: 1px 1px;
-// }
-// table.blueTable tbody td {
-//   font-size: 10px;
-//   font-weight: bold;  
-// }
-// table.blueTable tr:nth-child(even) {
-//   background: #D0E4F5;
-// }
-// table.blueTable thead {
-//   background: #1C6EA4;
-//   background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
-//   background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
-//   background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
-//   border-bottom: 2px solid #444444;
-// }
-// table.blueTable thead th {
-//   font-size: 10px;
-//   font-weight: bold;
-//   color: #FFFFFF;
-//   border-left: 2px solid #D0E4F5;
-// }
-// table.blueTable thead th:first-child {
-//   border-left: none;
-// }
-
-// table.blueTable tfoot {
-
-//   font-size: 14px;
-//   font-weight: bold;
-//   color:#070B00;
-//   background: #D0E4F5;
-//   background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-//   background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-//   background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-//   border-top: 2px solid #444444; 
-// }
-// table.blueTable tfoot td {
-//   font-size: 14px;
-// }
-
-
-// </style>
-	
-
-// ';
 
 $tabel_result1.='
 <table border=1>
@@ -750,52 +632,7 @@ foreach($report as $r):
 
 endforeach;	
 
-// <tbody>
 
-
-// $tot=0;
-// $tot1=0;
-// $tot2=0;
-// $total=0;	
-
-// foreach ($report as $r)
-// {
-
-// // total
-// $tot1+=$r->JUMLAH_EDC;
-// $tot2+=$r->JUMLAH_YAP;
-// $total =$tot1+$tot2;
-// // total
-
-
-// $jumlah =$r->JUMLAH_EDC+$r->JUMLAH_YAP;		
-
-// $tabel_result1.='
-// <tr>
-// <td>'.$r->WILAYAH.'</td>
-// <td>'.$r->JUMLAH_EDC.'</td>
-// <td>'.$r->JUMLAH_YAP.'</td>
-// <td>'.$jumlah.'</td>
-// <td>
-// <button type="button" id="detail_modal1" dataTahun="'.$tahun.'" dataBulan="'.$bulan.'" dataWilayah="'.$r->WILAYAH.'" class="">Detail</button>			
-// </td>
-// </tr>
-// ';
-
-// }
-// // end forech
-
-// $tabel_result1.='
-// <tfoot>
-// <tr >
-// <td >TOTAL</td>
-// <td>'.$tot1.'</td>
-// <td>'.$tot2.'</td>
-// <td>'.$total.'</td>
-// <td></td>
-// </tr>
-// </tfoot>
-// ';
 
 $tabel_result1.='
 </table>
@@ -807,8 +644,6 @@ echo $tabel_result1;
 
 
 
-	// $tabel ='';
-	// echo $tabel;
 
 
 }
@@ -909,9 +744,9 @@ $tabel_result1.='
 
 <tbody>
 ';
-
+$total=0;
 foreach($report as $r):
-
+$total +=$r->JUM_TOT;
 	$tabel_result1.='
 	<tr>
 	<td>'.$r->TYPE_MID.'</td>
@@ -926,57 +761,22 @@ foreach($report as $r):
 	';	
 endforeach;	
 
-
-// $tot=0;
-// $tot1=0;
-// $tot2=0;
-// $total=0;	
-// // 
-// foreach ($report as $r)
-// {
-
-// // total
-// $tot1+=$r->JUMLAH_EDC;
-// $tot2+=$r->JUMLAH_YAP;
-// $total =$tot1+$tot2;
-// // total
+$tabel_result1.='</tbody>';
 
 
-// $jumlah =$r->JUMLAH_EDC+$r->JUMLAH_YAP;		
-
-// $tabel_result1.='
-// <tr>
-// <td>'.$r->WILAYAH.'</td>
-// <td>'.$r->JUMLAH_EDC.'</td>
-// <td>'.$r->JUMLAH_YAP.'</td>
-// <td>'.$jumlah.'</td>
-// <td>
-// <button type="button" id="detail_modal2" dataTglAwal="'.$tgl_awal.'" dataTglAkhir="'.$tgl_akhir.'" dataWilayah="'.$r->WILAYAH.'" class=""   >Detail</button>			
-// </td>
-// </tr>
-// ';
-
-// }
-// // end forech
-
-// $tabel_result1.='
-// <tfoot>
-// <tr >
-// <td >TOTAL</td>
-// <td>'.$tot1.'</td>
-// <td>'.$tot2.'</td>
-// <td>'.$total.'</td>
-// <td></td>
-// </tr>
-// </tfoot>
-// ';
 
 $tabel_result1.='
-</tbody>
-</table>
-
-
+<tfoot>
+<tr >
+<td colspan="4">TOTAL</td>
+<td>'.$total.'</td>
+<td></td>
+</tr>
+</tfoot>
 ';
+
+
+$tabel_result1.='</table>';
 
 echo $tabel_result1;
 
