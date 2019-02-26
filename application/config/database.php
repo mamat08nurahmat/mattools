@@ -71,8 +71,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | the query builder class.
 */
 $active_group = 'default';
+
+
 $query_builder = TRUE;
 
+$active_group = 'dbsqlsrv';
+$db['dbsqlsrv'] = array(
+ 'dsn' => '',
+ 'hostname' => 'slntools.com',
+ 'port' => '1433',
+ 'username' => 'sa',
+ 'password' => 'BNI@2014',
+ 'database' => 'MONETS.DEV',
+ 'dbdriver' => 'sqlsrv',
+ 'dbprefix' => '',
+ 'pconnect' => FALSE,
+ 'db_debug' => (ENVIRONMENT !== 'production'),
+ 'cache_on' => FALSE,
+ 'cachedir' => '',
+ 'char_set' => 'utf8',
+ 'dbcollat' => 'utf8_general_ci',
+ 'swap_pre' => '',
+ 'encrypt' => FALSE,
+ 'compress' => FALSE,
+ 'stricton' => FALSE,
+ 'failover' => array(),
+ 'save_queries' => TRUE
+);
+/*
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
@@ -94,3 +120,4 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+*/
