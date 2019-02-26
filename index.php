@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -63,30 +63,11 @@
  * Different environments will require different levels of error reporting.
  * By default development will show errors but testing and live will hide them.
  */
-
-use Exception as BaseException;
-use Whoops\Handler\PrettyPageHandler;
-use Whoops\Run;
-use Whoops\Handler\JsonResponseHandler;
-
-require_once 'vendor/autoload.php';
 switch (ENVIRONMENT)
 {
 	case 'development':
 		error_reporting(-1);
 		ini_set('display_errors', 1);
-		
-		$whoops = new \Whoops\Run;
-		$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-		
-		if (\Whoops\Util\Misc::isAjaxRequest()) {
-		    $jsonHandler = new JsonResponseHandler();
-		    $jsonHandler->setJsonApi(true);
-		    $whoops->pushHandler($jsonHandler);
-		}
-
-		$whoops->register();
-
 	break;
 
 	case 'testing':
@@ -100,7 +81,6 @@ switch (ENVIRONMENT)
 		{
 			error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
 		}
-
 	break;
 
 	default:
