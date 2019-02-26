@@ -1,3 +1,12 @@
+<?php if (app()->uri->segment(1) === 'api'): ?>
+
+<?php 
+echo json_encode([
+	'status' => false,
+	'message' => $message,
+]);
+?>
+<?php else: ?>
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
@@ -62,3 +71,4 @@ p {
 	</div>
 </body>
 </html>
+<?php endif ?>
