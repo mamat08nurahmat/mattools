@@ -38,26 +38,34 @@ $this->load->view('template/sidebar');
     <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-<!--
-                <th>Extn.</th>
-                <th>Start date</th>
--->				
-                <th>Salary</th>
+                <th>Agency</th>
+                <th>Sales Center</th>
+<!---
+-->			
+                <th>Nama</th>
+                <th>Tgl Lahir</th>
+                <th>Posisi</th>
+                <th>Tgl Interview</th>
+                <th>SLI</th>
+<!---
+--->				
+				<th>ACT</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
+                <th>Agency</th>
+                <th>Sales Center</th>
+                <th>Nama</th>
 <!---
-                <th>Extn.</th>
-                <th>Start date</th>
+-->			
+                <th>Tgl Lahir</th>
+                <th>Posisi</th>
+                <th>Tgl Interview</th>
+                <th>SLI</th>
+<!---
 -->				
-                <th>Salary</th>
+				<th>ACT</th>
             </tr>
         </tfoot>
     </table>
@@ -105,12 +113,40 @@ $(document).ready(function() {
     //datatables
     table = $('#example').DataTable({ 
 
-        "ajax": "<?php echo site_url('employee/ajax_list_pnsc')?>",
+	
+        "ajax": "<?php echo site_url('employee/ajax_list_ahp')?>",
 //		"ajax": "<?php echo base_url('data/arrays.txt')?>",	//dummy data dev	
-        "deferRender": true
+        "deferRender": true,
+	
+	rowCallback: function(row, data, index){
+  	if(data[6]<= 2){
+    	$(row).find('td:eq(6)').css('background-color', 'green');
+    }
+	else if(data[6]==3){
+    	$(row).find('td:eq(6)').css('background-color', 'yellow');		
+	}
+	else{
+		$(row).find('td:eq(6)').css('background-color', 'red');
+	}
+
+   }	
 	
     });
 
+/*
+ table = $('#example').DataTable({ 
+	rowCallback: function(row, data, index){
+  	if(data[6]> 3){
+    	$(row).find('td:eq(6)').css('color', 'red');
+    }
+    if(data[2].toUpperCase() == 'EE'){
+    	$(row).find('td:eq(2)').css('color', 'blue');
+    }
+  }
+});
+*/	
+	
+	
 
 	    //datepicker
     $('.datepicker').datepicker({
@@ -145,18 +181,22 @@ function edit_employee(id)
 
     //Ajax Load data from ajax
     $.ajax({
-        url : "<?php echo site_url('employee/ajax_edit/')?>/" + id,
+        url : "<?php echo site_url('employee/ajax_edit_asp/')?>/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {
 console.log(data);			
-            $('[name="EmployeeID"]').val(data.EmployeeID);
+            $('[name="AgencyName"]').val(data.AgencyName);
+            $('[name="SalesCenterName"]').val(data.SalesCenterName);
             $('[name="EmployeeName"]').val(data.EmployeeName);
-            $('[name="EmployeeNewCode"]').val(data.EmployeeNewCode);
-            $('[name="EmailAddress"]').val(data.EmailAddress);
+            $('[name="UserGroupName"]').val(data.UserGroupName);
 /*
 */
+            $('[name="ApprovedDate"]').val(data.ApprovedDate);
+            $('[name="UserName"]').val(data.UserName);
+            $('[name="ApprovedRemark"]').val(data.ApprovedRemark);
+
 //            $('[name="address"]').val(data.address);
 //            $('[name="dob"]').datepicker('update',data.dob);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
@@ -185,7 +225,7 @@ console.log('save..............');
     } else {
 console.log('update..............');		
 		
-        url = "<?php echo site_url('employee/ajax_update')?>";
+        url = "<?php echo site_url('employee/ajax_update_asp')?>";
     }
 
     // ajax adding data to database
@@ -247,37 +287,109 @@ $this->load->view('template/foot');
                 <form action="#" id="form" class="form-horizontal">
                     <input type="hidden" value="" name="EmployeeID"/> 
                     <div class="form-body">
+					
+					
+					
+					
+					
+					
                         <div class="form-group">
-                            <label class="control-label col-md-3">Employee Name</label>
+                            <label class="control-label col-md-3">Agency</label>
+                            <div class="col-md-9">
+                                <input name="AgencyName" placeholder="AgencyName" class="form-control" type="text" readonly>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Sales Center</label>
+                            <div class="col-md-9">
+                                <input name="SalesCenterName" placeholder="SalesCenterName" class="form-control" type="text" readonly>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+	                        <div class="form-group">
+                            <label class="control-label col-md-3">Nama</label>
                             <div class="col-md-9">
                                 <input name="EmployeeName" placeholder="Employee Name" class="form-control" type="text" readonly>
                                 <span class="help-block"></span>
                             </div>
                         </div>
+					
                         <div class="form-group">
-                            <label class="control-label col-md-3">Employee New Code</label>
+                            <label class="control-label col-md-3">Posisi</label>
                             <div class="col-md-9">
-                                <input name="EmployeeNewCode" placeholder="Employee New Code" class="form-control" type="text">
+                                <input name="UserGroupName" placeholder="Posisi" class="form-control" type="text" readonly>
                                 <span class="help-block"></span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Email Address</label>
-                            <div class="col-md-9">
-                                <input name="EmailAddress" placeholder="First Name" class="form-control" type="text" readonly>
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-<!----
--->				
+					
+						
+				<h3>Hasil Interview Sebelumnya</h3>
 
                         <div class="form-group">
-                            <label class="control-label col-md-3">ActiveDate</label>
+                            <label class="control-label col-md-3">Tgl Interview</label>
                             <div class="col-md-9">
-                                <input name="ActiveDate" placeholder="yyyy-mm-dd" class="form-control datepicker" type="text">
+                                <input name="ApprovedDate" placeholder="ApprovedDate" class="form-control" type="text" readonly>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+				
+				
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Interview Oleh</label>
+                            <div class="col-md-9">
+                                <input name="UserName" placeholder="UserName" class="form-control" type="text" readonly>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+				
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Hasil Interview</label>
+                            <div class="col-md-9">
+                                <input name="ApprovedRemark" placeholder="ApprovedRemark" class="form-control" type="text" readonly>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+				
+				
+				
+				<h3>Keputusan</h3>				
+				
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tanggal Keputusan</label>
+                            <div class="col-md-9">
+                                <input name="TanggalKeputusan" placeholder="yyyy-mm-dd" class="form-control datepicker" type="text">
                                 <span class="help-block"></span>
                             </div>
                         </div>						
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Rekomendasi</label>
+                            <div class="col-md-9">
+							<select name="rekomendasi" class="form-control">
+							<option>-</option>
+							<option value="1">Approve</option>
+							<option value="2">Decline</option>
+							<option value="3">Hold - Tidak Datang</option>
+							<option value="4">Hold - Dokumen Tidak Lengkap</option>
+							<option value="5">Hold - Data Tidak Sesuai</option>
+							</select>
+
+							<span class="help-block"></span>
+                            </div>
+                        </div>						
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Keterangan</label>
+                            <div class="col-md-9">
+                                <textarea name="keterangan"  class="form-control"></textarea>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>						
+						
 						
                     </div>
                 </form>

@@ -40,15 +40,68 @@
                 </ul>
             </li>
 
-			
+
+
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Sales Force</span> <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-pie-chart"></i>
+                    <span>Sales Force</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">				
+                    <li><a href="<?php echo site_url('/performancedetail/promo/') ?>"><i class="fa fa-circle-o"></i>Profil</a></li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-pie-chart"></i>
+                    <span>Interview</span>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo site_url('/employee/pnsc') ?>"><i class="fa fa-circle-o"></i>Pend.New Sales Code</a></li>
+				
+                    <li><a href="<?php echo site_url('/employee/pending_interview/') ?>"><i class="fa fa-circle-o"></i>Pending Interview</a></li>
+                    <li><a href="<?php echo site_url('/employee/list_interview/') ?>"><i class="fa fa-circle-o"></i>List Interview</a></li>
                 </ul>
-            </li>
+            </li>    
+
+
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-pie-chart"></i>
+                    <span>Hiring</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">				
+                    <li><a href="<?php echo site_url('/employee/pending_hiring_wilayah/') ?>"><i class="fa fa-circle-o"></i>Pending Hiring Wilayah</a></li>
+                    <li><a href="<?php echo site_url('/employee/list_hiring/') ?>"><i class="fa fa-circle-o"></i>List Hiring</a></li>
+                    <li><a href="<?php echo site_url('/employee/ahp/') ?>"><i class="fa fa-circle-o"></i>Approval Hiring Pusat</a></li>
+                    <li><a href="<?php echo site_url('/employee/list_hiring_result/') ?>"><i class="fa fa-circle-o"></i>List Hiring Result</a></li>
+                    <li><a href="<?php echo site_url('/employee/list_hold_hiring/') ?>"><i class="fa fa-circle-o"></i>List Hold Hiring</a></li>
+                </ul>
+            </li>    
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-pie-chart"></i>
+                    <span>Sales Code</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">				
+                    <li><a href="<?php echo site_url('/employee/pnsc/') ?>"><i class="fa fa-circle-o"></i>Pending New Sales SC</a></li>
+                    <li><a href="<?php echo site_url('/employee/lnas/') ?>"><i class="fa fa-circle-o"></i>List New Appr Sales</a></li>
+                    <li><a href="<?php echo site_url('/employee/pusc/') ?>"><i class="fa fa-circle-o"></i>Pending Update SC</a></li>
+                    <li><a href="<?php echo site_url('/employee/lusc/') ?>"><i class="fa fa-circle-o"></i>List Update SC</a></li>
+                </ul>
+            </li>    
+			
+			
+                </ul>
+            </li>    
+
+			
+			
+			
 			
 			
             <li class="treeview">

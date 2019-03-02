@@ -716,6 +716,15 @@ AND IsDiscontinued=0
 
 
 //===============================================================================
+	//
+	public function detail(){
+		
+		$this->load->helper('url');	
+		$this->load->view('employee/employee_detail');
+		
+		
+	}
+
 // sample data tables defer_render
 	public function defer_render(){
 		
@@ -734,6 +743,36 @@ AND IsDiscontinued=0
 	}
 	
 
+//APPROVAL HIRING PUSAT	
+	public function ahp(){
+		
+		$this->load->helper('url');	
+		$this->load->view('employee/employee_view_ahp');
+		
+		
+	}
+
+
+//APPROVAL 	
+	public function profile(){
+		
+		$this->load->helper('url');	
+		$this->load->view('employee/employee_view_profile');
+		
+		
+	}
+
+	
+	//LIST HIRING	
+	public function list_hiring(){
+		
+		$this->load->helper('url');	
+		$this->load->view('employee/employee_view_list_hiring');
+		
+		
+	}
+
+	
 	
 		public function ajax_list_pnsc(){
 		
@@ -763,7 +802,7 @@ AND IsDiscontinued=0
 	//					"draw" => $_POST['draw'],
 	//					"recordsTotal" => $this->employee->count_all(),
 	//					"recordsFiltered" => $this->employee->count_filtered(),
-						"data" => $data,
+						"data" => $list,
 				);
 		//output to json format
 		
@@ -773,7 +812,184 @@ AND IsDiscontinued=0
 		
 	}
 
+	
+		public function ajax_list_ahp(){
+		
+//xxx		$list = $this->employee->get_datatables();
+		//$list = $this->employee_model->get_by_id();
+		$list = $this->db->query("
+		SELECT  * FROM vw_approval_hiring_pusat
+		")->result();//print_r($list);die();		
 
+		$data = array();
+		//$no = $_POST['start'];
+		foreach ($list as $employee) {
+			//$no++;
+			$row = array();
+			$row[] = $employee->AgencyName;
+			$row[] = $employee->SalesCenterName;
+			$row[] = $employee->EmployeeName;
+			$row[] = $employee->EmployeeBirthDate;
+			$row[] = $employee->UserGroupName;
+			$row[] = $employee->ApprovedDate;
+			$row[] = $employee->SLI;
+
+			//add html for action
+			$row[] = '
+			<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_employee('."'".$employee->EmployeeID."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+			';
+		
+			$data[] = $row;
+		}
+
+		$output = array(
+	//					"draw" => $_POST['draw'],
+	//					"recordsTotal" => $this->employee->count_all(),
+	//					"recordsFiltered" => $this->employee->count_filtered(),
+						"data" => $data,
+				);
+		//output to json format
+		
+		echo json_encode($output);		
+		
+		
+		
+	}
+	
+
+	
+		public function ajax_list_profile(){
+		
+//xxx		$list = $this->employee->get_datatables();
+		//$list = $this->employee_model->get_by_id();
+		$list = $this->db->query("
+		SELECT  TOP 4000 * FROM employee
+		")->result();//print_r($list);die();		
+
+		$data = array();
+		//$no = $_POST['start'];
+		foreach ($list as $employee) {
+			//$no++;
+			$row = array();
+			$row[] = $employee->AgencyID;
+			$row[] = $employee->SalesCenterID;
+			$row[] = $employee->EmployeeName;
+			$row[] = $employee->EmployeeBirthDate;
+			$row[] = $employee->UserGroupID;
+			$row[] = $employee->UserGroupID;
+			$row[] = $employee->UserGroupID;
+
+			//add html for action
+			$row[] = '
+			<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_employee('."'".$employee->EmployeeID."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+			';
+		
+			$data[] = $row;
+		}
+
+		$output = array(
+	//					"draw" => $_POST['draw'],
+	//					"recordsTotal" => $this->employee->count_all(),
+	//					"recordsFiltered" => $this->employee->count_filtered(),
+						"data" => $data,
+				);
+		//output to json format
+		
+		echo json_encode($output);		
+		
+		
+		
+	}
+	
+
+		public function ajax_list_list_hiring(){
+		
+		$list = $this->db->query("
+		SELECT   * FROM vw_list_hiring
+		")->result();//print_r($list);die();		
+		
+	
+		$output = array(
+	//					"draw" => $_POST['draw'],
+	//					"recordsTotal" => $this->employee->count_all(),
+	//					"recordsFiltered" => $this->employee->count_filtered(),
+						"data" => $list,
+				);
+		//output to json format
+		
+		echo json_encode($output);		
+		
+		
+		
+	}
+	
+
+
+		public function ajax_employee_detail($id)
+	{
+//		$this->load->model('employee_model','employee');
+//		$data = $this->employee->get_by_id($id);
+
+
+
+		$data = $this->db->query("
+SELECT * FROM vw_employee_detail		
+		WHERE EmployeeID='$id'
+		
+		")->row();
+		
+		echo json_encode($data);
+	}
+
+	
+	
+
+	
+		public function ajax_edit_asp($id)
+	{
+//		$this->load->model('employee_model','employee');
+//		$data = $this->employee->get_by_id($id);
+
+
+
+		$data = $this->db->query("
+select au.UserName ,
+mai.*,ahp.* 
+from vw_approval_hiring_pusat ahp
+left join MasterApproval mai ON ahp.InterviewApprovalID=mai.ApprovalID
+left join AppUser au ON mai.ApprovedBy=au.userID		
+		
+		WHERE ahp.EmployeeID='$id'
+		
+		")->row();
+		
+		echo json_encode($data);
+	}
+
+
+		public function ajax_edit_list_hiring($EmployeeID)
+	{
+//		$this->load->model('employee_model','employee');
+//		$data = $this->employee->get_by_id($id);
+
+
+
+		$data = $this->db->query("
+select au.UserName ,
+mai.*,ahp.* 
+from vw_approval_hiring_pusat ahp
+left join MasterApproval mai ON ahp.InterviewApprovalID=mai.ApprovalID
+left join AppUser au ON mai.ApprovedBy=au.userID		
+		
+		WHERE ahp.EmployeeID='$id'
+		
+		")->row();
+		
+		echo json_encode($data);
+	}
+	
+	
+	
 	public function ajax_edit($id)
 	{
 //		$this->load->model('employee_model','employee');
@@ -799,6 +1015,46 @@ AND IsDiscontinued=0
 		echo json_encode(array("status" => TRUE));
 	}	
 	
+
+
+	public function ajax_update_asp()
+	{
+		$data = array('HiringStatus' => 1 );
+	$this->db->update('Employee', $data, array('EmployeeID' => $this->input->post('EmployeeID')));
+$ai=	$this->db->query("SELECT (MAX(ApprovalID)+1) as ApprovalID from MasterApproval")->row();
+$approval_id = $ai->ApprovalID;
+//print_r($approval_id);
+	  		$data = array(
+				'ApprovalID' => $approval_id,
+				'ProgramID' => '02.03.03',
+				'DataOperation' => 'DataOpr.Add',
+				'ApprovedStatus' => 5,
+				'ApprovedBy' => 6944,//$this->input->post('ApprovedBy'),
+				'ApprovedDate' =>'2019-02-13 09:11:49.360', //$this->input->post('ApprovedDate'),
+				'ApprovedRemark' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+				'RefApprovalID' => ''
+			);			
+	
+//print_r($data);	
+
+		$this->db->insert('MasterApproval', $data);
+/*
+*/
+/*
+*/			
+		// $this->db->insert_id();		
+		
+		echo json_encode(array("status" => TRUE));
+	}	
+//dev
+	public function row_details(){
+		
+		
+		$this->load->helper('url');	
+		$this->load->view('dt_row_details');		
+		
+	}
+
 	
 }
 

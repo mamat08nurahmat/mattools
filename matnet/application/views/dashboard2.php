@@ -705,8 +705,9 @@ $this->load->view('template/js');
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/js/pages/dashboard2.js') ?>" type="text/javascript"></script>
 
-<!-- AdminLTE for demo purposes -->
+<!-- AdminLTE for demo purposes
 <script src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/js/demo.js') ?>" type="text/javascript"></script>
+ -->
 
 <?php
 $this->load->view('template/foot');
