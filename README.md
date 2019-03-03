@@ -1,28 +1,45 @@
-# PHP-SQLSRV
+sudo apt-get update
 
-## About
+sudo apt-get install automake autotools-dev fuse g++ git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-dev make pkg-config
 
-I need to create this image because I use ArchLinux and a project need use SQLServe and Laravel. Laravel don't work as well with `dblib`, so I need `MS SQLSrv` and `MS ODBC` drivers.
+git clone https://github.com/s3fs-fuse/s3fs-fuse.git
 
-[Here](https://gjuniioor.github.io/blog/driver-sqlsrv-laravel/) are a blog post (in portuguese (Brazil)) explain the case.
+cd s3fsfuse
+./autogen.sh
+./configure --prefix=/usr with-openssl
+make
+sudo make install
 
-## Softs
 
-In this image there is installed some softwares to help your development, like Git, cURL, Apache and Composer.
+vim /etc/passwd-s3fs
 
-### Tags and softs versions
+-->>>> Acces Key:Secret Key
+-->>>> AKIAJQORWWY2TEJQ6LVQ:wSx6lr/X7NKQRCvTmatQU76exhsiuR/PMyylJJ/Y
 
-The name of the version is the PHP Version.
+sudo chmod 640 /etc/passwd-s3fs
 
-## Run
 
-~~~
-$ docker run -d -p 80:80 -v projeto/laravel:/var/www/html gjuniioor/php-sqlsrv:7.0
-$ docker run -d -p 80:80 -v /home/ubuntu/mattools:/var/www/html gjuniioor/php-sqlsrv:7.0
-~~~
 
-And go to [localhost](http://localhost).
 
-## Bugs, Questions and Contribution
+mkdir /s3devopscilsy
 
-Has a bug found? Please, open a [Issue](https://github.com/gjuniioor/docker-php-sqlsrv/issues), a [Pull Request](https://github.com/gjuniioor/docker-php-sqlsrv/pulls) or contact me: [@gjuniioor](https://github.com/gjuniioor).
+
+sudo s3fs s3mamat -o allow_other -o uid=1000 /s3devopscilsy
+
+
+---------------------------------------
+sudo s3fs s3mamat -o passwd_file=/etc/passwd-s3fs -o allow_other -o uid=1000 /s3devopscilsy
+---------------------------------------
+
+
+
+
+
+
+
+
+echo AKIAJQORWWY2TEJQ6LVQ:wSx6lr/X7NKQRCvTmatQU76exhsiuR/PMyylJJ/Y > ${HOME}/.passwd-s3fs
+chmod 600 ${HOME}/.passwd-s3fs
+
+cd s3fsfuse/src
+mv s3fs /local/bin
