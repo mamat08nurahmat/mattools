@@ -76,10 +76,10 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'sa',
-	'password' => 'codeigniter',
-	'database' => 'ecom',
-	'dbdriver' => 'sqlsrv',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'demo',
+	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
@@ -96,64 +96,20 @@ $db['default'] = array(
 );
 */
 
-/*
 $db['default'] = array(
 	'dsn'	=> '',
-    'hostname' => 'localhost',
-//	'hostname' => '//192.168.4.70:1579/sapmdb',
-	'username' => 'root',
-//	'username' => 'SMO_TRAINING',
-	'password' => '',
-//	'password' => 'smo123',
-	'database' => 'ecom',
-//	'database' => '',
-	'dbdriver' => 'mysqli',
-//	'dbdriver' => 'oci8',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-//	'pconnect' => TRUE,
-
-'db_debug' => TRUE,
-
-'cache_on' => FALSE,
-'cachedir' => '',
-'char_set' => 'utf8',
-'dbcollat' => 'utf8_general_ci',
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
-
-
-
-*/
-$db['default'] = array(
-	'dsn'	=> '',
-    'hostname' => 'dbmat.cmeypdk92ow4.us-west-2.rds.amazonaws.com',
-//	'hostname' => '//192.168.4.70:1579/sapmdb',
+	'hostname' => 'dbmat.cmeypdk92ow4.us-west-2.rds.amazonaws.com',
 	'username' => 'dbmat',
-//	'username' => 'SMO_TRAINING',
-	'password' => '',
-//	'password' => 'smo123',
-	'database' => 'mat12345',
-//	'database' => '',
+	'password' => 'mat12345',
+	'database' => 'demo',
 	'dbdriver' => 'mysqli',
-//	'dbdriver' => 'oci8',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
-//	'pconnect' => TRUE,
-
-'db_debug' => TRUE,
-
-'cache_on' => FALSE,
-'cachedir' => '',
-'char_set' => 'utf8',
-'dbcollat' => 'utf8_general_ci',
 	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
 	'swap_pre' => '',
 	'encrypt' => FALSE,
 	'compress' => FALSE,
@@ -161,7 +117,4 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
-
-
-
 
