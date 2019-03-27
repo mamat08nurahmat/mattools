@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |				'ssl_key'    - Path to the private key file
 |				'ssl_cert'   - Path to the public key certificate file
 |				'ssl_ca'     - Path to the certificate authority file
-|				'ssl_capath' - Path to a directory containing trusted CA certificates in PEM format
+|				'ssl_capath' - Path to a directory containing trusted CA certificats in PEM format
 |				'ssl_cipher' - List of *allowed* ciphers to be used for the encryption, separated by colons (':')
 |				'ssl_verify' - TRUE/FALSE; Whether verify the server certificate or not ('mysqli' only)
 |
@@ -72,14 +72,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
-
+/*
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
-	'dbdriver' => 'mysqli',
+	'username' => 'sa',
+	'password' => 'codeigniter',
+	'database' => 'ecom',
+	'dbdriver' => 'sqlsrv',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
@@ -94,3 +94,28 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+*/
+
+$db['default'] = array(
+	'dsn'	=> '',
+    'hostname' => 'ec2-35-163-208-30.us-west-2.compute.amazonaws.com',
+	'username' => 'root',
+	'password' => 'tiger',
+	'database' => 'kuesioner',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => TRUE,
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+

@@ -83,3 +83,19 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+
+
+//CUSTOM
+$http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 's' : '') . '://';
+$fo = str_replace("index.php","", $_SERVER['SCRIPT_NAME']);
+$base = $base = "$http" . $_SERVER['SERVER_NAME'] . ":" . $_SERVER['SERVER_PORT'] . "" . $fo;
+
+defined('BASE_URL') 			OR define('BASE_URL'			, $base);
+defined('BASE_ASSET') 			OR define('BASE_ASSET'			, BASE_URL . 'asset/');
+
+defined('BASE_ASSET')           OR define('BASE_ASSET', base_url('asset/')); // highest automatically-assigned error code
+defined('VERSION')              OR define('VERSION', '2.8.0'); // highest automatically-assigned error code
+defined('EXTENSION_PATH')      	OR define('EXTENSION_PATH', FCPATH . 'cc-content/extensions/'); // highest automatically-assigned error code
+
+
