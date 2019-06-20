@@ -17,8 +17,8 @@ The name of the version is the PHP Version.
 ## Run
 
 ~~~
-$ docker run -d -p 80:80 -v projeto/laravel:/var/www/html gjuniioor/php-sqlsrv:7.0
-$ docker run -d -p 80:80 -v /home/ubuntu/mattools:/var/www/html gjuniioor/php-sqlsrv:7.0
+
+$ docker run -d -p 8001:80 -v "${PWD}:/var/www/html" --name php-sqlsrv gjuniioor/php-sqlsrv:7.0
 ~~~
 
 And go to [localhost](http://localhost).
